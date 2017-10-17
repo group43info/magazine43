@@ -1,0 +1,23 @@
+{
+  "port":3000,
+  "session": {
+    "secret": "Antares",
+    "key": "sid",
+    "cookie": {
+      "path": "/",
+      "httpOnly": "true",
+      "maxAge": null
+    }
+  },
+  "mongoose": {
+    "url": "mongodb://magazine43:qwerty43@ds119675.mlab.com:19675/magazine43",
+    "options": {
+      "server": {
+        "soccketOptions": {
+          "keepAlive": 1
+        }
+      }
+    },
+    "useMongoClient": true
+  }
+}

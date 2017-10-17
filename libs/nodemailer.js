@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
-
-module.exports = function sendMessage() {
+module.exports = function sendMessage(confirmnumber, email) {
   nodemailer.createTestAccount((err, account) => {
     if (err) {
       console.log(err);
@@ -20,10 +19,10 @@ module.exports = function sendMessage() {
     // setup email data with unicode symbols
     let mailOptions = {
       from: '"Fred Foo 👻"', // sender address
-      to: 'sergiykorotun1997@gmail.com', // list of receivers
+      to: email, // list of receivers
       subject: 'Hello ✔', // Subject line
       text: 'Hello world?', // plain text body
-      html: '<p>Hello</p>' // html body
+      html: confirmnumber // html body
     };
 
     // send mail with defined transport object
