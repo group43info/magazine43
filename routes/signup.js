@@ -8,16 +8,17 @@ exports.post = function(req, res) {
   User.authhorize(req.body.email, password, function(err, user) {
     if (err) {
       if (err instanceof AuthError) {
-      res.send('Wrong key!')
+        res.send('Wrong key!')
       } else {
         return next(err);
       }
-    }
-    if (user === null) {
-      return res.send('Hекоректно введені дані!')
     } else {
-      req.session.user = user._id;
-      res.redirect('index');
+      if (user === null || user === undefined) {
+        return res.send('Hекоректно введені дані!');
+      } else {
+        req.session.user = user._id;
+        return res.redirect('index');
+      }
     }
   });
 

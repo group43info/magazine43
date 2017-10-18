@@ -3,9 +3,9 @@ var mongoose = require('../libs/mongoose.js');
 var ObjectID = require('mongodb').ObjectID;
 var User = require('../models/users.js').User;
 var AuthError = require('../models/users.js').AuthError;
-var random = require('random-number-generator');
+var randomChars = require('random-chars');
 var sendMessage = require('../libs/nodemailer');
-var confirmnumber = random(10) + '' + random(10) + '' + random(10) + '' + random(10) + '' + random(10);
+var confirmnumber = randomChars.get(8);
 exports.post = function(req, res, next) {
   var email = req.body.email;
   sendMessage(confirmnumber, email);
@@ -28,7 +28,7 @@ exports.post = function(req, res, next) {
       }
     }
     mongoose.connection.db.collection('users').updateOne({_id: ObjectID(user._id)},
-      {$set: {hallbook: req.body.hallbook}}
+      {$set: {hallbook: req.body.hallbook, name: req.body.name, surname: req.body.surname}}
     );
     req.session.user = user._id;
     res.redirect('login');

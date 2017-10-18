@@ -25,7 +25,11 @@ app.use(session(sess));
   app.post('/signin', require('./signin').post);
   app.post('/signup', require('./signup').post);
 
+
   app.get('/index', require('./main').get);
+  app.get('/metodika-jornal', require('./metodika-jornal').get);
+  app.get('/pz-jornal', require('./pz-jornal').get);
+  app.get('/pz-visit', require('./pz-visit').get);
 
   app.get('/users', function(req, res) {
     mongoose.connection.db.collection('users').find().toArray(function(err, docs) {
@@ -52,6 +56,6 @@ app.use(session(sess));
     res.sendStatus(200)
   });
   app.get('/', function(req, res) {
-    res.send('test');
+    res.redirect('login');
   });
 };

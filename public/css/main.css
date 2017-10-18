@@ -248,7 +248,7 @@ textarea {
 	margin: 20px;
 	margin-left: 100px;
 	height: 500px;
-	
+
 }
 /*Для дисципліни параграф */
 .dis{
@@ -273,11 +273,11 @@ textarea {
 
 /*при формуванні журналу*/
 .count{
-	
+
 }
 
 .accordion {
-	
+
 
 	margin: 20px;
 	margin-left: 100px;
@@ -353,7 +353,7 @@ textarea {
 .linc{
 	margin-left: 2%;
 	margin-bottom: 2%;
-	margin-top: 1%; 
+	margin-top: 1%;
 	font-size: 14pt;
 }
 .linc a{
@@ -371,14 +371,14 @@ textarea {
    height: 700px;
    padding: 10px;
    padding-left: 15px;
-   margin-right: 20px; 
+   margin-right: 20px;
    float: left;
   }
-.button {
+.buton {
   	border-bottom: 1px solid grey;
   	padding: 5px;
   	border-radius: 3px;
-  	background: -webkit-linear-gradient(#179b77,black); 
+  	background: -webkit-linear-gradient(#179b77,black);
   	color: white;
   	font:message-box;
   	text-overflow: ellipsis;
