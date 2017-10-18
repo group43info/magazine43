@@ -70,6 +70,19 @@ schema.statics.authhorize = function(username, password, callback) {
     }
   ], callback);
 };
+schema.statics.recuperation = function(id, newpassword, callback) {
+  var User = this;
+  User.findOne({_id: ObjectID(id)}, function(err, user) {
+    if (err) {
+      throw err;
+    } else {
+      console.log('user');
+        user.hashedPassword = user.encryptPassword(newpassword);
+        user.save();
+        callback(null, user);
+    }
+  });
+};
 
 schema.statics.registration = function(username, password, callback) {
   var User = this;
@@ -93,22 +106,7 @@ schema.statics.registration = function(username, password, callback) {
     }
   ], callback);
 };
-schema.statics.recuperation = function(id, oldpassword, newpassword, callback) {
-  var User = this;
-  User.findOne({_id: ObjectID(id)}, function(err, user) {
-    if (err) {
-      throw err;
-    } else {
-      if (user.checkPassword(oldpassword)) {
-        user.hashedPassword = user.encryptPassword(newpassword);
-        user.save();
-        callback(null, user);
-      } else {
-        callback(new AuthError('Password incorect!'));
-      }
-    }
-  });
-};
+
 
 
 exports.User = mongoose.model('User', schema);

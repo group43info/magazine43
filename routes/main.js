@@ -1,9 +1,9 @@
 
 var mongoose = require('../libs/mongoose.js');
 var ObjectID = require('mongodb').ObjectID;
-exports.get = function (req, res) {
+exports.get = function(req, res) {
   if (req.session.user === undefined || req.session.user === null) {
-    res.send('Not Found');
+    res.sendStatus(404);
   } else {
     mongoose.connection.db.collection('users').findOne({_id: ObjectID(req.session.user)}, function(err, doc) {
       if (err) throw err;

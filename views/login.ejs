@@ -27,29 +27,43 @@
             <label>
               Email адреса<span class="req">*</span>
             </label>
-            <input type="email" required autocomplete="off" name='email'/>
-          </div>
+              <input type="email" required autocomplete="on" name='email'/>
+            </div>
 
-          <div class="field-wrap">
+            <div class="field-wrap">
             <label>
               Пароль<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off" name="password"/>
-          </div>
-
-          <p class="forgot"><a href="#">Забули пароль?</a></p>
-
-          <button class="button button-block"/>Вхід</button>
-
+              <input type="password"required autocomplete="off" name="password"/>
+            </div>
+            <p class="tab forgot"><a href="#forgot" onclick="deactivated()">Забули пароль?</a></p>
+            <button class="button button-block"/>Вхід</button>
           </form>
-
         </div>
+        <script type="text/javascript">
+        function deactivated() {
+          $(document).ready(function() {
+            $('li').removeClass('active');
+          });
+        }
+        </script>
+        <div id="forgot">
+          <h1>Відновлення паролю</h1>
 
+          <form action="/forgot" method="post">
+            <div class="field-wrap">
+            <label>
+              Email адреса<span class="req">*</span>
+            </label>
+            <input type="email" required autocomplete="on" name='email'/>
+            </div>
+            <button type="submit" class="button button-block"/>Відправити</button>
+          </form>
+        </div>
         <div id="login">
           <h1>Реєстрація у журналі</h1>
 
           <form action="/signin" method="post">
-
           	          <div class="top-row">
             <div class="field-wrap">
               <label>
@@ -70,23 +84,8 @@
             <label>
               Email адреса<span class="req">*</span>
             </label>
-            <input type="email"required autocomplete="off" name="email"/>
+            <input type="email"required autocomplete="on" name="email"/>
           </div>
-
-          <!-- <div class="field-wrap">
-            <label>
-              Задайте пароль<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off" name="password"/>
-          </div>
-
-          <div class="field-wrap">
-            <label>
-              Повторіть пароль<span class="req">*</span>
-            </label>
-            <input type="password"required autocomplete="off" name="repassword"/>
-          </div> -->
-
                     <div class="field-wrap">
             <label>
               Номер залікової чи трудової книги<span class="req">*</span>

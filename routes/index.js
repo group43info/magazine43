@@ -27,9 +27,14 @@ app.use(session(sess));
 
 
   app.get('/index', require('./main').get);
-  app.get('/metodika-jornal', require('./metodika-jornal').get);
-  app.get('/pz-jornal', require('./pz-jornal').get);
+  app.get('/metodika-jornal', require('./jornal').get);
+  app.get('/pz-jornal', require('./jornal').get);
+  app.get('/trpz-jornal', require('./jornal').get);
+  
   app.get('/pz-visit', require('./pz-visit').get);
+  // app.get('/metodika-visit', require('./metodika-visit').get);
+
+  app.post('/forgot', require('./forgot').post);
 
   app.get('/users', function(req, res) {
     mongoose.connection.db.collection('users').find().toArray(function(err, docs) {
