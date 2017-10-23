@@ -132,6 +132,7 @@ a:hover {
 .tab-content > div:first-child {
   display: block;
 }
+
 h1 {
   text-align: center;
   color: #ffffff;
@@ -393,3 +394,23 @@ textarea {
   	color: #fff;
 
   }
+
+
+ .discipline .add .form{
+     position: relative;
+ }
+.discipline .add .form .closes {
+  position: absolute;
+  top:0px;
+  right: 0px;
+  background: rgba(19, 35, 47, 0.9);
+  border: 0;
+  cursor: pointer;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+  font:message-box;
+  text-overflow: ellipsis;
+  width: 130px;
+  outline: none;
+}

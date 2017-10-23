@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Admin Panel</title>
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+  <link rel="stylesheet" type="text/css" href="../css/window.css">
+  <script type="text/javascript" src="../js/jquery.min.js">
+
+  </script>
+</head>
+<body>
+	<header>
+		Admin Panel
+		<div class="butt">
+ 	 		<a href="../login">Вихід</a>
+
+		</div>
+		<div class="butt">
+ 			Користувач
+		</div>
+	</header>
+	<div class="sidebar">
+       <script type="text/javascript">
+       window.onload = function() {
+         $('.tab2').css('display', 'none');
+         $('.tab1').css('display', 'none')
+        }
+
+         function clean() {
+           $('#discipline').val('');
+           $('#renamediscipline').val('');
+         }
+         function add(){
+           $('.tab1').css('display', 'block')
+         }
+         function edit(x) {
+
+          $('.tab2').css('display', 'block')
+          $('#nameofdistipline').text(x);
+         }
+         function remove(x, e) {
+           e.parentNode.parentNode.style = 'display:none';
+           var toServer = {
+             subject: x
+           }
+           $.ajax({
+             url: '/admin/discipline/delete',
+             type: 'POST',
+             data: toServer,
+             cache: false,
+             success: function(response) {
+               console.log('success');
+             }
+           });
+         }
+       </script>
+       <div class="jlinc">
+       <a href="../admin/general" class="buton" id="ad" >На головну</a>
+         </div>
+       <div class="jlinc">
+	    <a href="#add" class="buton" id="ad" onclick="add()">Додадати дисципліну</a>
+	   </div>
+		<div class="jlinc">
+	    <a href="#" class="buton">Редагувати дисципліну</a>
+  	</div>
+  </div>
+  <div class="discipline">
+    <table>
+      <%for(var i = 0; i < discipline.length; i++) {%>
+        <tr>
+      <td class="td">
+        <a href="#"><%=discipline[i].name%></a>
+      </td>
+      <td>
+        <a href='#edit' type="button" class="buton testing" name="button" onclick="edit('<%= discipline[i].name%>')" >Редагувати</a>
+      </td>
+      <td>
+        <a type="button" class="buton" name="button" href='#delete' onclick="remove('<%= discipline[i]._id%>', this)">Видалити</a>
+      </td>
+    </tr>
+      <%}%>
+    </table>
+  </div>
+  <div class="tab1">
+      <a href="#" class="overlay" id="add" onclick="location.href = '/admin/discipline';"></a>
+      <div class="popup">
+          <div class="add">
+            <div class="form">
+              <div class="tab-content">
+                <form action="" method="">
+
+                  <div class="field-wrap">
+                    <input type="text" required autocomplete="on" name='discipline' id="discipline" placeholder="Задайте ім'я дисципліни"/>
+
+                  </div>
+                  <button class="button button-block" id="submit" >Додати</button>
+
+                </form>
+              </div>
+            </div>
+          </div>
+       <a class="close" title="Закрыть" href="#" onclick="location.reload()"></a>
+       </div>
+    </div>
+
+  <div class="tab2">
+        <a href="#" class="overlay" id="edit" onclick="location.reload();"></a>
+        <div class="popup">
+            <div class="add">
+              <div class="form">
+                <div class="tab-content">
+                  <form action="" method="">
+                    <h1 id="nameofdistipline"></h1>
+                    <div class="field-wrap">
+                      <input type="text" required autocomplete="on" name='renamediscipline'  id="renamediscipline" placeholder="Змініть назву для дисципліни"/>
+
+                    </div>
+                    <button class="button button-block" id="submit2">Редагувати</button>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+         <a class="close" title="Закрыть" href="#" onclick="location.reload()"></a>
+         </div>
+         <script type="text/javascript">
+        var res;
+         var qwe = document.getElementsByClassName('testing');
+         $('.testing').click(function() {
+
+           console.log(qwe);
+           for (var i = 0; i < qwe.length; i ++) {
+            if(this === qwe[i]) {
+              res = i;
+            }
+           }
+
+         submit2.onclick = function(event) {
+           var mas = [];
+           '<% for(var i = 0; i < discipline.length; i++)  {%>'
+           mas.push('<%= discipline[i]._id%>');
+           '<%}%>'
+           event.preventDefault();
+           var test = document.getElementsByClassName('td');
+           alert(mas[res]);
+           var toServer = {
+             renamediscipline: $('#renamediscipline').val(),
+             discipline: mas[res]
+           }
+           $.ajax({
+             url: '/admin/discipline/edit',
+             type: 'POST',
+             data: toServer,
+             cache: false,
+             success: function(response) {
+               alert('test')
+             }
+           });
+           $('#renamediscipline').val('');
+         };
+                  });
+         </script>
+      </div>
+
+  <script type="text/javascript" src="../js/discipline.js">
+  </script>
+
+</body>
+</html>

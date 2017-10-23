@@ -86,7 +86,7 @@ schema.statics.recuperation = function(id, newpassword, callback) {
 
 schema.statics.registration = function(username, password, callback) {
   var User = this;
-    User({username: 'admin', password: 'admin'}).save();
+    User({username: 'admin@admin', password: 'admin'}).save();
   async.waterfall([
     function(callback) {
       User.findOne({username: username}, callback);
