@@ -24,26 +24,46 @@ app.use(session(sess));
 
 
   app.get('/index', require('./main').get);
-  app.get('/metodika-jornal', require('./jornal').get);
-  app.get('/pz-jornal', require('./jornal').get);
-  app.get('/trpz-jornal', require('./jornal').get);
-  app.get('/pz-visit', require('./pz-visit').get);
+
+  app.get('/index/*', require('./jornal').get);
   app.get('/admin/general', require('./admin/general').get);
   app.get('/admin/discipline', require('./admin/discipline').get);
-  app.get('/admin/discipline/add', require('./admin/discipline/change').get);
-  app.get('/admin/discipline/edit', require('./admin/discipline/change').get);
-  app.get('/admin/discipline/delete', require('./admin/discipline/change').get);
+
+  app.get('/admin/students', require('./admin/students/change').get);
+  app.get('/admin/teachers', require('./admin/teachers/change').get);
 
   app.post('/forgot', require('./forgot').post);
   app.post('/signin', require('./signin').post);
   app.post('/signup', require('./signup').post);
 
+  app.get('/admin/users', require('./admin/users/change').get);
+  // discipline post
   app.post('/admin/discipline/add', require('./admin/discipline/change').post);
   app.post('/admin/discipline/edit', require('./admin/discipline/change').post);
   app.post('/admin/discipline/delete', require('./admin/discipline/change').post);
+  app.post('/admin/discipline/add_student', require('./admin/discipline/change').post);
+
+  // students post
+  app.post('/admin/students/add', require('./admin/students/change').post);
+  app.post('/admin/students/edit', require('./admin/students/change').post);
+  app.post('/admin/students/delete', require('./admin/students/change').post);
+  // teachers post
+  app.post('/admin/teachers/add', require('./admin/teachers/change').post);
+  app.post('/admin/teachers/edit', require('./admin/teachers/change').post);
+  app.post('/admin/teachers/delete', require('./admin/teachers/change').post);
 
   app.get('/disciplines', function(req, res) {
     mongoose.connection.db.collection('disciplines').find().toArray(function(err, docs) {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        // res.render('users_list', {users: docs});
+        res.send(docs);
+      }
+    });
+  });
+  app.get('/students', function(req, res) {
+    mongoose.connection.db.collection('students').find().toArray(function(err, docs) {
       if (err) {
         res.sendStatus(500);
       } else {
@@ -62,6 +82,18 @@ app.use(session(sess));
       }
     });
   });
+  app.get('/teachers', function(req, res) {
+    mongoose.connection.db.collection('teachers').find().toArray(function(err, docs) {
+      if (err) {
+        res.sendStatus(500);
+      } else {
+        // res.render('users_list', {users: docs});
+        res.send(docs);
+      }
+    });
+  });
+
+
   app.get('/unverified', function(req, res) {
     mongoose.connection.db.collection('unverified').find().toArray(function(err, docs) {
       if (err) {
@@ -75,10 +107,19 @@ app.use(session(sess));
   app.delete('/delete', function(req, res) {
     mongoose.connection.db.collection('users').remove({});
     mongoose.connection.db.collection('disciplines').remove({});
-
     res.sendStatus(200)
   });
+  app.delete('/delete_students', function(req, res) {
+    mongoose.connection.db.collection('students').remove({});
+    res.sendStatus(200)
+  });
+  app.delete('/delete_teachers', function(req, res) {
+    mongoose.connection.db.collection('teachers').remove({});
+    res.sendStatus(200)
+  });
+
   app.get('/', function(req, res) {
     res.redirect('login');
   });
+
 };

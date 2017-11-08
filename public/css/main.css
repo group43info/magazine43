@@ -86,7 +86,8 @@ a:hover {
   border-radius: 4px;
   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
   border: 1px solid grey;
-
+  height: 550px;
+  overflow-y: auto;
   font-family: sans-serif;
 }
 
@@ -173,9 +174,8 @@ label.highlight {
 
 input, textarea {
   font-size: 22px;
-  display: block;
-  width: 100%;
-  height: 100%;
+  /*display: block;*/
+
   padding: 5px 10px;
   background: none;
   background-image: none;
@@ -185,6 +185,10 @@ input, textarea {
   -webkit-transition: border-color .25s ease, box-shadow .25s ease;
   transition: border-color .25s ease, box-shadow .25s ease;
   border-radius: 8px;
+}
+input[type='text'], input[type='email'], input[type='password'] {
+width: 100%;
+height: 100%;
 }
 input:focus, textarea:focus {
   outline: 0;
@@ -366,6 +370,7 @@ textarea {
 .sidebar
   {
 	background: rgba(23, 155, 119, 0.2);
+  max-width: 20%;
 	font-size: 20px;
    border-left:1px solid grey;
    font:message-box;
@@ -413,4 +418,51 @@ textarea {
   text-overflow: ellipsis;
   width: 130px;
   outline: none;
+}
+
+.student  .hover_setting {
+  display: none;
+}
+
+.td{
+  color:white;
+}
+.table {
+  max-width: 75%;
+  font-size: 20px;
+   border-left:1px solid grey;
+   font:message-box;
+   height: 700px;
+   padding: 10px;
+   padding-left: 15px;
+   margin-right: 20px;
+   float: left;
+}
+
+.table > table {
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+text-align: center;
+border-collapse: collapse;
+border-spacing: 5px;
+background: #E1E3E0;
+border-radius: 20px;
+}
+.table > table th {
+font-size: 22px;
+font-weight: 300;
+padding: 12px 10px;
+border-bottom: 2px solid #F56433;
+color: #F56433;
+}
+.table >  tbody tr:nth-child(2) {
+border-bottom: 2px solid #F56433;
+}
+.table td {
+padding: 10px;
+color: #8D8173;
+}
+
+.users, td {
+  border: 2px solid black;
+  border-collapse: collapse;
 }

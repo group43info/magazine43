@@ -27,9 +27,32 @@ exports.post = function(req, res, next) {
         return next(err);
       }
     }
+    function add_params() {
     mongoose.connection.db.collection('users').updateOne({_id: ObjectID(user._id)},
-      {$set: {hallbook: req.body.hallbook, name: req.body.name, surname: req.body.surname}}
+      {$set: {hallbook: req.body.hallbook, name: req.body.name, surname: req.body.surname, role: role}}
     );
+  }
+    var role = '';
+    mongoose.connection.db.collection('teachers').findOne({'name': req.body.name, 'surname': req.body.surname}, function(err, doc) {
+      if (err) throw err;
+      if (doc) {
+        role = 'teacher';
+        add_params();
+      } else {
+        mongoose.connection.db.collection('students').findOne({'name': req.body.name, 'surname': req.body.surname}, function(err, doc) {
+          if (err) throw err;
+          if (doc) {
+            role = 'student';
+            add_params();
+          } else {
+            role = 'user';
+            add_params();
+          }
+        })
+      }
+    })
+
+
     req.session.user = user._id;
     res.redirect('login');
   });

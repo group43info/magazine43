@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Admin Panel</title>
+  <link rel="stylesheet" type="text/css" href="../css/main.css">
+  <link rel="stylesheet" type="text/css" href="../css/window.css">
+  <script type="text/javascript" src="../js/jquery.min.js">
+  </script>
+</head>
+<body>
+	<header>
+		Admin Panel
+		<div class="butt">
+ 	 		<a href="../login">Вихід</a>
+
+		</div>
+		<div class="butt">
+ 			Користувач
+		</div>
+	</header>
+  <div class="sidebar">
+    <script type="text/javascript">
+    function remove(x, e) {
+      e.parentNode.parentNode.style = 'display:none';
+      var toServer = {
+        _id: x
+      }
+      $.ajax({
+        url: '/admin/teachers/delete',
+        type: 'POST',
+        data: toServer,
+        cache: false,
+        success: function(response) {
+          console.log('success');
+        }
+      });
+    }
+    $('.selectdisciplines').click(function() {
+      alert($('.selectdisciplines').text());
+    });
+    </script>
+       <div class="jlinc">
+       <a href="../../admin/general" class="buton" id="ad" >На головну</a>
+         </div>
+       <div class="jlinc">
+	    <a href="#add" class="buton" id="ad" onclick="">Додадати викладача</a>
+	   </div>
+		<div class="jlinc">
+	    <a href="#" class="buton" id="setting" >Редагувати дані викладача</a>
+  	</div>
+  </div>
+  <div class="teacher">
+    <table>
+      <% for(var i = 0; i < teachers.length; i++){%>
+        <tr>
+      <td class="td">
+        <h4 class="initial"><%=teachers[i].name%> <%=teachers[i].surname%></h4>
+        <h4 class="groupnumber" >Email <%=teachers[i].email%></h4>
+        <h4 class="hallnumber">Password <%=teachers[i].password%></h4>
+      </td>
+      <td class="hover_setting" style='display:none'>
+        <a href='#edit' type="button" class="buton testing" name="button" >Редагувати</a>
+      </td>
+      <td class="hover_setting" style='display:none'>
+        <a type="button" class="buton" name="button" href='#delete' onclick="remove('<%= teachers[i]._id%>', this)">Видалити</a>
+      </td>
+    </tr>
+    <%}%>
+    </table>
+  </div>
+  <div class="tab1">
+      <a href="#" class="overlay" id="add" onclick="location.href = '/admin/teachers';"></a>
+      <div class="popup">
+          <div class="add">
+            <div class="form">
+              <div class="tab-content">
+                <form action="" method="">
+                  <div class="field-wrap">
+                    <input type="text" required autocomplete="on" name='name' id="name" placeholder="Ім'я викладача"/>
+                  </div>
+                  <div class="field-wrap">
+                    <input type="text" required autocomplete="on" name='surname' id="surname" placeholder="Прізвище викладача"/>
+                  </div>
+                  <div class="field-wrap">
+                    <input type="text" required autocomplete="on" name='email' id="email" placeholder="Пошта вик викладача"/>
+                  </div>
+                  <div class="field-wrap">
+                    <input type="text" required autocomplete="on" name='password' id="password" placeholder="Пароль для викладача"/>
+                  </div>
+                  <div class="field-wrap">
+                    <h1>Задайте групи для викладача</h1>
+                    <select class="" name="">
+                      <% for (var i = 0; i < disciplines.length; i++) {%>
+                      <option value="" class="selectdisciplines">
+                        <a href="#ek">kek</a>
+                      </option>
+                      <% } %>
+                    </select>
+                  </div>
+                  <button class="button button-block" id="submit" >Додати</button>
+                </form>
+              </div>
+            </div>
+          </div>
+       <a class="close" title="Закрыть" href="#" onclick="location.reload()"></a>
+       </div>
+    </div>
+
+  <div class="tab2">
+        <a href="#" class="overlay" id="edit"></a>
+        <div class="popup">
+            <div class="add">
+              <div class="form">
+                <div class="tab-content">
+                  <form action="" method="">
+                    <div class="field-wrap">
+                      <input type="text" required autocomplete="on" name='rename' id="rename" placeholder="Ім'я викладача"/>
+                    </div>
+                    <div class="field-wrap">
+                      <input type="text" required autocomplete="on" name='resurname' id="resurname" placeholder="Прізвище викладача"/>
+                    </div>
+                    <div class="field-wrap">
+                      <input type="text" required autocomplete="on" name='reemail' id="reemail" placeholder="Пошта викладача"/>
+                    </div>
+                    <div class="field-wrap">
+                      <input type="text" required autocomplete="on" name='repassword' id="repassword" placeholder="Пароль для викладача"/>
+                    </div>
+                    <button class="button button-block" id="submit2" >Редагувати</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+         <a class="close" title="Закрыть" href="#" ></a>
+         <script type="text/javascript">
+         $('#setting').toggle(function() {
+           $('.hover_setting').css('display', 'table-cell');
+           }, function() {
+                $('.hover_setting').css('display', 'none');
+           }
+         );
+
+
+        var res;
+         var qwe = document.getElementsByClassName('testing');
+         $('.testing').click(function() {
+
+           console.log(qwe);
+           for (var i = 0; i < qwe.length; i ++) {
+            if(this === qwe[i]) {
+              res = i;
+            }
+           }
+
+         submit2.onclick = function(event) {
+           var mas = [];
+           '<% for(var i = 0; i < teachers.length; i++)  {%>'
+           mas.push('<%= teachers[i]._id%>');
+           '<%}%>'
+           event.preventDefault();
+           var test = document.getElementsByClassName('td');
+           var toServer = {
+             _id: mas[res],
+             rename: $('#rename').val(),
+             resurname: $('#resurname').val(),
+             reemail: $('#reemail').val(),
+             repassword: $('#repassword').val()
+           }
+           $.ajax({
+             url: '/admin/teachers/edit',
+             type: 'POST',
+             data: toServer,
+             cache: false,
+             success: function(response) {
+               if(response.status === 'bad') {
+                alert('Ця пошта вже використовується!')
+               }
+             }
+
+           });
+          $('#rediscipline, #rename, #resurname, #reemail, #repassword').val('');
+         };
+          });
+         </script>
+         </div>
+      </div>
+      <script type="text/javascript" src="../../js/teacher.js">
+      </script>
+</body>
+</html>

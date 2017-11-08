@@ -94,6 +94,7 @@ schema.statics.registration = function(username, password, callback) {
     function(user, callback) {
       // console.log('Session---', req.session);
       if (user) {
+        console.log('Користувач з цією поштою зареєстрований!');
         callback(new AuthError('Користувач з цією поштою зареєстрований!'));
       } else {
         user = new User({username: username, password: password});

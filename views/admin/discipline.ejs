@@ -3,10 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Admin Panel</title>
-	<link rel="stylesheet" type="text/css" href="../css/main.css">
+  <link rel="stylesheet" type="text/css" href="../css/main.css">
   <link rel="stylesheet" type="text/css" href="../css/window.css">
   <script type="text/javascript" src="../js/jquery.min.js">
-
   </script>
 </head>
 <body>
@@ -54,6 +53,60 @@
              }
            });
          }
+         var students_in_disciplines = [], all_students = [], students_in_discipline = [];
+         '<% for(var i = 0; i < discipline.length; i++)  {%>'
+            students_in_disciplines.push('<%= discipline[i].students%>');
+          '<%}%>'
+          '<% for(var i = 0; i < students.length; i++)  {%>'
+            all_students.push('<%= students[i]._id%>');
+          '<%}%>'
+
+
+        // add_student
+          var discipline_id = 'test';
+          function numberOfdiscipline(x, n) {
+            '<% for(var i = 0; i < discipline.length; i++)  {%>'
+                if('<%=i%>' === String(n)) {
+                  students_in_discipline = '<%= discipline[i].students %>';
+                }
+            '<%}%>'
+            students_in_discipline = students_in_discipline.split(',');
+            discipline_id = x;
+          }
+          console.log('Count ' + count);
+                    var count = 0;
+          function add_student(x, y) {
+            students_in_discipline.map(function(m) {
+              if(m === x) {
+                count = 1;
+                console.log('test');
+              }
+              console.log('x ' + x + ' m + ' + m);
+            });
+            if (count === 0){
+            y.style=`
+                      background: url('../img/Tick_Mark_icon-icons.com_69146.png');
+                      background-size: cover;
+                      `;
+            var toServer = {
+              student_id: x,
+              discipline_id:discipline_id
+            }
+            $.ajax({
+              url: '/admin/discipline/add_student',
+              type: 'POST',
+              data: toServer,
+              cache: false,
+              success: function(response) {
+                console.log('success');
+              }
+            });
+            count = 0;
+          } else {
+            alert('Студент вже добавлений раніше!')
+          }
+          }
+          // add_student
        </script>
        <div class="jlinc">
        <a href="../admin/general" class="buton" id="ad" >На головну</a>
@@ -62,7 +115,7 @@
 	    <a href="#add" class="buton" id="ad" onclick="add()">Додадати дисципліну</a>
 	   </div>
 		<div class="jlinc">
-	    <a href="#" class="buton">Редагувати дисципліну</a>
+	    <a href="#" class="buton" id="setting">Редагувати дисципліну</a>
   	</div>
   </div>
   <div class="discipline">
@@ -70,14 +123,20 @@
       <%for(var i = 0; i < discipline.length; i++) {%>
         <tr>
       <td class="td">
-        <a href="#"><%=discipline[i].name%></a>
+        <h4 href="#"><%=discipline[i].name%></h4>
       </td>
-      <td>
-        <a href='#edit' type="button" class="buton testing" name="button" onclick="edit('<%= discipline[i].name%>')" >Редагувати</a>
+      <td class="hover_setting" style="display: none">
+        <a href='#edit' type="button" class="buton testing " name="button" onclick="edit('<%= discipline[i].name%>')" >Редагувати</a>
       </td>
-      <td>
+      <td class="hover_setting"  style="display: none">
         <a type="button" class="buton" name="button" href='#delete' onclick="remove('<%= discipline[i]._id%>', this)">Видалити</a>
       </td>
+      <td class="hover_setting" style="display: none">
+        <a href='#student_list' type="button" class="buton testing " name="button" onclick="" >Список студентів на курсі</a>
+      </td>
+      <td class="hover_setting" style="display: none">
+        <a href='#add_student' type="button" class="buton testing " name="button" onclick="numberOfdiscipline('<%=discipline[i]._id%>', <%=i%>)" >Додадати студента до курсу</a>
+      </td><br>
     </tr>
       <%}%>
     </table>
@@ -128,8 +187,6 @@
         var res;
          var qwe = document.getElementsByClassName('testing');
          $('.testing').click(function() {
-
-           console.log(qwe);
            for (var i = 0; i < qwe.length; i ++) {
             if(this === qwe[i]) {
               res = i;
@@ -159,9 +216,94 @@
            });
            $('#renamediscipline').val('');
          };
-                  });
+      });
+      $('#setting').toggle(function() {
+        $('.hover_setting').css('display', 'table-cell');
+        }, function() {
+             $('.hover_setting').css('display', 'none');
+        }
+      );
          </script>
       </div>
+
+      <div class="tab3">
+        <style media="screen">
+          .tab3_add {
+            width: 20px;
+            height: 20px;
+            background: url('../img/round-add-button_icon-icons.com_72595.png');
+            background-position: center;
+            background-size: cover;
+            border: none;
+            outline: none;
+            cursor: pointer;
+          }
+          .check {
+            background: url('../img/Tick_Mark_icon-icons.com_69146.png');
+            background-size: cover;
+          }
+        </style>
+            <a href="#" class="overlay" id="add_student" onclick="location.reload();"></a>
+            <div class="popup" >
+                <div class="add_student">
+                  <div class="form">
+                    <div class="tab-content">
+                      <form action="" method="">
+                        <% for (var i = 0; i < students.length; i++) {%>
+                          <h3><%=students[i].name%> <%=students[i].surname%>
+                          <button type="button" name="button" class="tab3_add" id="submit3" onclick="add_student('<%=students[i]._id%>', this)"></button>
+                        </h1>
+
+                        <% } %>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+             <a class="close" title="Закрыть" href="#" onclick="location.reload()"></a>
+             </div>
+             <script type="text/javascript">
+                    var res;
+                     var qwe = document.getElementsByClassName('testing');
+                     $('.testing').click(function() {
+                       for (var i = 0; i < qwe.length; i ++) {
+                        if(this === qwe[i]) {
+                          res = i;
+                        }
+                       }
+
+                     submit2.onclick = function(event) {
+                       var mas = [];
+                       '<% for(var i = 0; i < discipline.length; i++)  {%>'
+                       mas.push('<%= discipline[i]._id%>');
+                       '<%}%>'
+                       event.preventDefault();
+                       var test = document.getElementsByClassName('td');
+                       alert(mas[res]);
+                       var toServer = {
+                         renamediscipline: $('#renamediscipline').val(),
+                         discipline: mas[res]
+                       }
+                       $.ajax({
+                         url: '/admin/discipline/edit',
+                         type: 'POST',
+                         data: toServer,
+                         cache: false,
+                         success: function(response) {
+                           alert('test')
+                         }
+                       });
+                       $('#renamediscipline').val('');
+                     };
+                  });
+                  $('#setting').toggle(function() {
+                    $('.hover_setting').css('display', 'table-cell');
+                    }, function() {
+                         $('.hover_setting').css('display', 'none');
+                    }
+                  );
+
+             </script>
+          </div>
 
   <script type="text/javascript" src="../js/discipline.js">
   </script>

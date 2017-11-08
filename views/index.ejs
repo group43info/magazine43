@@ -19,40 +19,19 @@
 
 
 	<div class="accordion">
-		<section id="one">
-			<h2><a href="#one">Методика навчання інформатики та математики</a></h2>
+    <%for (var i = 0; i < disciplines.length; i++){%>
+		<section id="n<%=i%>">
+			<h2><a href="#n<%=i%>"><%=disciplines[i].name%></a></h2>
 			<div>
 				<div class="linc">
-					<a href="metodika-jornal"> Журнал оцінок </a>
+					<a href="index/<%=disciplines[i].url%>"> Журнал оцінок </a>
 				</div>
 				<div class="linc">
-					<a href="metodika-visit"> Журнал відвідування </a>
+					<a href="index/metodika-visit"> Журнал відвідування </a>
 				</div>
 			</div>
 		</section>
-		<section id="two">
-			<h2><a href="#two">Програмне забезпечення навчального призначення</a></h2>
-			<div>
-				<div class="linc">
-					<a href="pz-jornal"> Журнал оцінок </a>
-				</div>
-				<div class="linc">
-					<a href="pz-visit"> Журнал відвідування </a>
-				</div>
-			</div>
-		</section>
-		<section id="three">
-			<h2><a href="#three">Технологія розробки програмного забезпечення</a></h2>
-			<div>
-				<div class="linc">
-					<a href="trpz-jornal"> Журнал оцінок </a>
-				</div>
-				<div class="linc">
-					<a href="trpz-visit"> Журнал відвідування </a>
-				</div>
-			</div>
-		</section>
-
+  <%}%>
 	</div>
 </body>
 </html>
