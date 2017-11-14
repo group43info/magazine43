@@ -424,8 +424,8 @@ textarea {
   display: none;
 }
 
-.td{
-  color:white;
+td, th{
+  color:black;
 }
 .table {
   max-width: 75%;
@@ -438,8 +438,14 @@ textarea {
    margin-right: 20px;
    float: left;
 }
+.table  > table, table th, table td {
+  border: 2px solid red;
+  border-collapse: collapse;
+  min-width: 100px;
+  text-align: center;
+}
 
-.table > table {
+/*.table > table {
 font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 text-align: center;
 border-collapse: collapse;
@@ -466,3 +472,4 @@ color: #8D8173;
   border: 2px solid black;
   border-collapse: collapse;
 }
+*/

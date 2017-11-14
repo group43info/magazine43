@@ -73,16 +73,15 @@
             students_in_discipline = students_in_discipline.split(',');
             discipline_id = x;
           }
-          console.log('Count ' + count);
-                    var count = 0;
+          let count = 0;
           function add_student(x, y) {
+            console.log(x)
             students_in_discipline.map(function(m) {
               if(m === x) {
-                count = 1;
-                console.log('test');
+                return count = 1;
               }
-              console.log('x ' + x + ' m + ' + m);
             });
+
             if (count === 0){
             y.style=`
                       background: url('../img/Tick_Mark_icon-icons.com_69146.png');
@@ -102,10 +101,13 @@
               }
             });
             count = 0;
+          alert('success');
           } else {
-            alert('Студент вже добавлений раніше!')
+            alert('bad');
+            count = 0;
           }
-          }
+
+          } 
           // add_student
        </script>
        <div class="jlinc">

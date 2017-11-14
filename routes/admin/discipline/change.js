@@ -29,7 +29,7 @@ exports.post = function(req, res) {
       function(err, doc) {
         if (err) throw err;
         students = doc.students;
-        var count = 0;
+        let count = 0;
         if (students.length === 0) {
           students.push(student_id);
         } else {
@@ -42,7 +42,6 @@ exports.post = function(req, res) {
             students.push(student_id);
           }
         }
-        console.log(students.length);
         mongoose.connection.db.collection('disciplines').updateOne({_id: ObjectID(discipline_id)},
           {$set: {students: students}}
         );

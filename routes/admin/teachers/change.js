@@ -26,8 +26,8 @@ exports.post = function(req, res, next) {
       name: req.body.name,
       surname: req.body.surname,
       email: req.body.email,
-      password: req.body.password,
-      status: 'teacher'
+      password: confirmnumber,
+      role: 'teacher'
     };
     User.registration(req.body.email, confirmnumber, function(err, user) {
       if (err) {
@@ -39,7 +39,7 @@ exports.post = function(req, res, next) {
         }
       } else {
         mongoose.connection.db.collection('users').updateOne({_id: ObjectID(user._id)},
-          {$set: {name: req.body.name, surname: req.body.surname}}
+          {$set: {name: req.body.name, surname: req.body.surname, role: 'teacher'}}
         );
         req.session.user = user._id;
         mongoose.connection.db.collection('teachers').insert(teacher, function(err) {

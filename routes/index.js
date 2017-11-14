@@ -51,7 +51,11 @@ app.use(session(sess));
   app.post('/admin/teachers/add', require('./admin/teachers/change').post);
   app.post('/admin/teachers/edit', require('./admin/teachers/change').post);
   app.post('/admin/teachers/delete', require('./admin/teachers/change').post);
+  app.get('/index/*', require('./jornal').get);
+  // jornal post
+  app.post('/index/*', require('./jornal').post);
 
+  
   app.get('/disciplines', function(req, res) {
     mongoose.connection.db.collection('disciplines').find().toArray(function(err, docs) {
       if (err) {

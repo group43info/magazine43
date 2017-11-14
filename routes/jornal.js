@@ -14,7 +14,11 @@ exports.get = function(req, res) {
       if (doc) {
         mongoose.connection.db.collection('users').findOne({_id: ObjectID(req.session.user)}, function(err, user) {
           if (err) throw err;
-                  res.render('journal', {discipline: doc, user: user});
+          if(user.role === 'student'){
+            res.render('journal', {discipline: doc, user: user});
+          } else if (user.role === 'teacher') {
+            res.render('journal_teacher', {discipline: doc, user: user});
+          }
         });
 
       } else {
@@ -34,3 +38,6 @@ exports.get = function(req, res) {
     // }
   }
 };
+exports.post = function (req, res) {
+  res.send('ok')
+}

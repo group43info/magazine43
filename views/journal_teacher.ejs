@@ -4,8 +4,23 @@
 	<meta charset="UTF-8">
 	<title>Журнал оцінок</title>
 	<link rel="stylesheet" type="text/css" href="../css/main.css">
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 </head>
 <body>
+	<style>
+	.table > table {
+		background: white;
+		color: black;
+	}
+		#date button, #theme button {
+			background: none;
+			background: white url(../img/pencil.png);
+			background-position: center;
+			background-size: cover;
+			width: 25px;
+			height: 25px;
+		}
+	</style>
 	<header>
 		<%=discipline.name%>. Журнал оцінок.
 		<div class="butt">
@@ -23,6 +38,9 @@
 		<div class="jlinc">
 	     <a href="metodika-visit" class="buton">Журнал відвідування</a>
   		</div>
+  		<div class="jlinc">
+	     <a href="#" class="buton" onclick="new_theme()">Нова тема</a>
+  		</div>
   </div>
   <div class="table">
     <table>
@@ -30,10 +48,14 @@
       <th rowspan="2">Cписок<br>студентів</th>
       <th>Date</th>
     </tr>
+    
      <tr id="theme">
-      <td>Тема</td>
+      <th>Тема</th>
      </tr>
      </table>
   </div>
+  <script src='../js/journal_teacher.js'>
+  	
+  </script>
 </body>
 </html>
