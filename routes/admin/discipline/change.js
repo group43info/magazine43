@@ -10,6 +10,7 @@ exports.post = function(req, res) {
     var students = [];
     var url = cyrillicToTranslit().transform(discipline, '_');
     mongoose.connection.db.collection('disciplines').insert({name: discipline, url: url, students: students});
+    mongoose.connection.db.collection(url).insert({name_student: [{date: '01'}, {mark: '2'}]});
   } else if (url.pathname === '/admin/discipline/edit') {
     var renamediscipline = req.body.renamediscipline;
     var discipline = req.body.discipline;

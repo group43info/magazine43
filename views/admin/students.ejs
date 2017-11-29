@@ -162,7 +162,6 @@
                var initial = document.getElementsByClassName('initial'),
                groupnumber = document.getElementsByClassName('groupnumber'),
                hallnumber = document.getElementsByClassName('hallnumber');
-               console.log(response.hallnumber);
               initial[res].innerText = response.name + ' ' + response.surname;
               groupnumber[res].innerText = 'Група ' + response.group;
               hallnumber[res].innerText = 'Номер залікової книги ' + ' ' + response.hallbook;

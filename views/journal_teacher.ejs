@@ -5,12 +5,19 @@
 	<title>Журнал оцінок</title>
 	<link rel="stylesheet" type="text/css" href="../css/main.css">
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="../css/window.css">
+	  <script type="text/javascript" src="../js/jquery.min.js">
+  </script>
 </head>
 <body>
 	<style>
 	.table > table {
 		background: white;
 		color: black;
+		
+	}
+	.table {
+		overflow-x: scroll;
 	}
 		#date button, #theme button {
 			background: none;
@@ -20,6 +27,21 @@
 			width: 25px;
 			height: 25px;
 		}
+		th {
+			max-height: 200px;
+			/*max-width: 100px;*/
+		}
+		th span {
+			max-width: 100px;
+			overflow: hidden;
+			color: black;
+			font-size: 20px;
+		}
+		input[type="date"]{
+			width: 200px;
+			color: black;
+			font-size: 20px;
+		};
 	</style>
 	<header>
 		<%=discipline.name%>. Журнал оцінок.
@@ -54,6 +76,31 @@
      </tr>
      </table>
   </div>
+
+    <div class="tab1">
+      <a href="#" class="overlay" id="addTheme" onclick=""></a>
+      <div class="popup">
+          <div class="addTheme">
+            <div class="form">
+              <div class="tab-content">
+                <form action="" method="">
+                  <div class="field-wrap">
+                    <input type="text" required autocomplete="on" name='themetoServer' id="themetoServer" placeholder="Введiть тему"/>
+                  </div>
+                  <div class="field-wrap">
+                    <input type="date" required  name='datetoSever' id="datetoSever"/>
+                  </div>
+                  <button class="button button-block" id="submit" onclick="changefield()">Зберегти</button>
+                </form>
+              </div>
+            </div>
+          </div>
+       <a class="close" title="Закрыть" href="#"></a>
+       </div>
+    </div>
+    <script>
+
+    </script>
   <script src='../js/journal_teacher.js'>
   	
   </script>

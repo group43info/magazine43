@@ -26,6 +26,7 @@ app.use(session(sess));
   app.get('/index', require('./main').get);
 
   app.get('/index/*', require('./jornal').get);
+  app.post('/index/*', require('./jornal').post);
   app.get('/admin/general', require('./admin/general').get);
   app.get('/admin/discipline', require('./admin/discipline').get);
 

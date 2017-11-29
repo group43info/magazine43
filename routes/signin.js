@@ -40,7 +40,7 @@ exports.post = function(req, res, next) {
         })
 
   function allow() {
-  	User.registration(req.body.email, confirmnumber, function (err, user) {
+  	User.registration(req.body.email, req.body.hallbook, confirmnumber, function (err, user) {
     if (err) {
       if (err instanceof AuthError) {
         return res.send(403, err.message);

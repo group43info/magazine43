@@ -426,6 +426,7 @@ textarea {
 
 td, th{
   color:black;
+  writing-mode: tb-rl;
 }
 .table {
   max-width: 75%;

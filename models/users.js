@@ -84,17 +84,16 @@ schema.statics.recuperation = function(id, newpassword, callback) {
   });
 };
 
-schema.statics.registration = function(username, password, callback) {
+schema.statics.registration = function(username, hallbook, password, callback) {
   var User = this;
     User({username: 'admin@admin', password: 'admin'}).save();
   async.waterfall([
     function(callback) {
-      User.findOne({username: username}, callback);
+      User.findOne({username: username, hallbook: hallbook}, callback);
     },
     function(user, callback) {
       // console.log('Session---', req.session);
       if (user) {
-        console.log('Користувач з цією поштою зареєстрований!');
         callback(new AuthError('Користувач з цією поштою зареєстрований!'));
       } else {
         user = new User({username: username, password: password});

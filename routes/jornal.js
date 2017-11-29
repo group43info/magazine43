@@ -39,5 +39,6 @@ exports.get = function(req, res) {
   }
 };
 exports.post = function (req, res) {
+  console.log(req.body.theme + ' ' + req.body.date);
   res.send('ok')
 }

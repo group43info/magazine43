@@ -29,7 +29,7 @@ exports.post = function(req, res, next) {
       password: confirmnumber,
       role: 'teacher'
     };
-    User.registration(req.body.email, confirmnumber, function(err, user) {
+    User.registration(req.body.email, "",confirmnumber, function(err, user) {
       if (err) {
         if (err instanceof AuthError) {
           res.send({status: 'bad'});
