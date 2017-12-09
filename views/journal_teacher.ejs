@@ -10,41 +10,8 @@
   </script>
 </head>
 <body>
-	<style>
-	.table > table {
-		background: white;
-		color: black;
-		
-	}
-	.table {
-		overflow-x: scroll;
-	}
-		#date button, #theme button {
-			background: none;
-			background: white url(../img/pencil.png);
-			background-position: center;
-			background-size: cover;
-			width: 25px;
-			height: 25px;
-		}
-		th {
-			max-height: 200px;
-			/*max-width: 100px;*/
-		}
-		th span {
-			max-width: 100px;
-			overflow: hidden;
-			color: black;
-			font-size: 20px;
-		}
-		input[type="date"]{
-			width: 200px;
-			color: black;
-			font-size: 20px;
-		};
-	</style>
 	<header>
-		<%=discipline.name%>. Журнал оцінок.
+		<%=discipline%>. Журнал оцінок.
 		<div class="butt">
  	 		<a href="../login">Вихід</a>
 
@@ -68,16 +35,58 @@
     <table>
     <tr id="date">
       <th rowspan="2">Cписок<br>студентів</th>
-      <th>Date</th>
+         <% for (var n = 0; n < date.length; n++) {%>
+     	<th><%=date[n]%></th>
+     	<%}%>
     </tr>
     
      <tr id="theme">
-      <th>Тема</th>
+		<% for (var n = 0; n < date.length; n++) {%>
+     	<th>Тема</th>
+     	<%}%>
+     	
      </tr>
+     <% for (var i = 0; i < students.length; i++) {%>
+     <tr class="mark" >
+		<td class="nameofstudent"><%= students[i].name%> <%= students[i].surname%> </td>
+		<% for (var j = 0; j < marks.length; j++) {%>
+		<td><span><%=marks[j][i]%></span><a href="#givemark" class="formark" 
+				onclick="giveMark(<%=i%>,'<%=students[i].name%>','<%=students[i].surname%>'), getThis(this)"><img src="../img/pencil.png" alt="" class="pencil"></a></td>
+		<% } %>
+     </tr>
+     <% } %>
      </table>
   </div>
 
     <div class="tab1">
+      <a href="#" class="overlay" id="givemark" onclick=""></a>
+      <div class="popup">
+          <div class="addTheme">
+            <div class="form">
+              <div class="tab-content">
+              	<h2 id="valueofmark"></h2>
+                <form action="" method="">
+                  <div class="field-wrap">
+                    <div class="select">
+					 <select id="cd-dropdown" class="cd-select">
+					    <option value="0" selected>Вкажіть оцінку</option>
+					    <option value="1" class="icon-monkey">1</option>
+					    <option value="2" class="icon-bear">2</option>
+					    <option value="3" class="icon-squirrel">3</option>
+					    <option value="4" class="icon-elephant">4</option>
+					    <option value="5" class="icon-elephant">5</option>
+					</select>
+					</div>
+                  </div>
+                  <button class="button button-block" id="submit2" onclick="changefield()">Зберегти</button>
+                </form>
+              </div>
+            </div>
+          </div>
+       <a class="close" title="Закрыть" href="#"></a>
+       </div>
+    </div>
+    <div class="tab2">
       <a href="#" class="overlay" id="addTheme" onclick=""></a>
       <div class="popup">
           <div class="addTheme">
@@ -99,10 +108,126 @@
        </div>
     </div>
     <script>
+    	var paramsId = window.location.pathname.toString();
+    	var students_name = [];
+    	var number_of_student = -1;
+    	var date = -1;
+    		students_id = [];
+    		'<% for (var i = 0; i < students.length; i++) {%>'
+    			students_name.push('<%=students[i].name%>' + '<%=students[i].surname%>');
+    			students_id.push('<%=students[i]._id%>');
+    		'<%}%>'
+    	
+		var count = 0;
 
+		function new_theme(){
+			let date = document.getElementById('date');
+			let theme = document.getElementById('theme');
+			let th1 = document.createElement('th');
+			let th2 = document.createElement('th');
+			let date_insert = new Date();
+			let theme_insert = 'Тема';
+			let marks = document.getElementsByClassName('mark');
+			theme_insert.title = 'Test';
+			let btn_marks = [];
+			'<% for (var i = 0; i < students.length; i++) {%>'
+			btn_marks.push(`<span></span><a href="#givemark" class="formark" 
+				onclick="giveMark(<%=i%>,'<%=students[i].name%>','<%=students[i].surname%>'),  getThis(this)"><img src="../img/pencil.png" alt="" class="pencil"></a>`);
+			'<%}%>'
+			th1.innerHTML = '<a href="#addTheme"><span>'+ date_insert.getDate() + '/' + date_insert.getMonth() + '</span></a>';
+			th2.innerHTML = '<a href="#addTheme"><span class="theme">Введiть тему</span></a>';
+			for (let i = 0; i < marks.length; i++) {
+				var cell = marks[i].insertCell(-1);
+				cell.innerHTML = btn_marks[i];
+			}
+			date.appendChild(th1);
+			theme.appendChild(th2);
+
+			let themetoServer = document.getElementById('themetoServer').value;
+	    	var toServer = {
+	       		theme: themetoServer,
+	       		date: date_insert.getDate() + '/' +  date_insert.getMonth()
+      		}
+
+	      $.ajax({
+	        url: paramsId + '/addTheme',
+	        type: 'POST',
+	        data: toServer,
+	        cache: false,
+	        success: function(response) {
+	          var theme = document.getElementsByClassName('theme');
+	          
+	        }
+	      });
+	      
+		  $('#themetoServer, #datetoSever').val('');
+		}
+		let position_of_mark = 'Test';
+		function giveMark(x, name, surname) {
+			$('#valueofmark').text(name + ' ' + surname);
+			number_of_student = x;
+		}
+		function getThis(thiss) {
+			position_of_mark = thiss;
+			console.log(thiss);
+		}
+
+
+		// submit.onclick = function(event) {
+	 //    	event.preventDefault();
+	 //    	let theme = document.getElementById('themetoServer').value;
+	 //    	let date = document.getElementById('datetoSever').value;
+	 //    	var toServer = {
+	 //       		theme: theme,
+	 //       		date: date
+  //     	}
+
+	 //      $.ajax({
+	 //        url: paramsId + '/addTheme',
+	 //        type: 'POST',
+	 //        data: toServer,
+	 //        cache: false,
+	 //        success: function(response) {
+	 //          var theme = document.getElementsByClassName('theme');
+	          
+	 //        }
+	 //      });
+	      
+		//   $('#themetoServer, #datetoSever').val('');
+	 //        }
+	        submit2.onclick = function(event) {
+	    	event.preventDefault();
+	    	let date_to_server = new Date();
+	    	var selectvalue = document.getElementById('cd-dropdown').value;
+	    	var toServer = {
+	       		mark: selectvalue,
+	       		number_of_student: number_of_student,
+	       		date: date_to_server.getDate() + '/' + date_to_server.getMonth()
+	       		// document.getElementById('datetoSever') ? document.getElementById('datetoSever').value; :'date_insert'
+      	}
+	      $.ajax({
+	        url: paramsId + '/givemark',
+	        type: 'POST',
+	        data: toServer,
+	        cache: false,
+	        success: function(response) {
+	        	position_of_mark.previousElementSibling.innerHTML = response.mark; //innerHTML = response.mark;
+
+	        }
+	      });
+	      
+		  $('#cd-dropdown').val('');
+	        }
     </script>
-  <script src='../js/journal_teacher.js'>
+  	<script src='../js/journal_teacher.js'>
   	
-  </script>
+  	</script>
+  	<style>
+  			input[type="date"]{
+			width: 200px;
+			color: black;
+			font-size: 20px;
+		};
+  	</style>
 </body>
 </html>

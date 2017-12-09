@@ -7,7 +7,7 @@
 </head>
 <body>
 	<header>
-		<%=discipline.name%>. Журнал оцінок.
+		<%=discipline%>. Журнал оцінок.
 		<div class="butt">
  	 		<a href="../login">Вихід</a>
 
@@ -28,11 +28,25 @@
     <table>
     <tr id="date">
       <th rowspan="2">Cписок<br>студентів</th>
-      <th>Date</th>
+         <% for (var n = 0; n < date.length; n++) {%>
+     	<th><%=date[n]%></th>
+     	<%}%>
     </tr>
+    
      <tr id="theme">
-      <td>Тема</td>
+		<% for (var n = 0; n < date.length; n++) {%>
+     	<th>Тема</th>
+     	<%}%>
+     	
      </tr>
+     <% for (var i = 0; i < students.length; i++) {%>
+     <tr class="mark" >
+		<td class="nameofstudent"><%= students[i].name%> <%= students[i].surname%> </td>
+		<% for (var j = 0; j < marks.length; j++) {%>
+		<td><span><%=marks[j][i]%></span><a href="#givemark"></a></td>
+		<% } %>
+     </tr>
+     <% } %>
      </table>
   </div>
 </body>

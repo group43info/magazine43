@@ -8,6 +8,30 @@
   <script type="text/javascript" src="../js/jquery.min.js">
   </script>
 </head>
+<style>
+        .tab3_add {
+            width: 20px;
+            height: 20px;
+            background: url('../img/round-add-button_icon-icons.com_72595.png');
+            background-position: center;
+            background-size: cover;
+            border: none;
+            outline: none;
+            cursor: pointer;
+          }
+          .check {
+            width: 20px;
+            height: 20px;
+            background: url('../img/round-add-button_icon-icons.com_72595.png');
+            background-position: center;
+            background-size: cover;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            background: url('../img/Tick_Mark_icon-icons.com_69146.png');
+            background-size: cover;
+          }
+</style>
 <body>
 	<header>
 		Admin Panel
@@ -72,10 +96,23 @@
             '<%}%>'
             students_in_discipline = students_in_discipline.split(',');
             discipline_id = x;
+            $.ajax({
+             url: '/admin/discipline/check',
+             type: 'POST',
+             data: {id:x},
+             cache: false,
+             success: function(response) {
+              for(var i = 0; i < response.students.length; i++){
+                $('#lefted_student').html(`<h3>`+response.students[i].name + response.students[i].name +`<button type="button" name="button" class="tab3_add" id="submit3" onclick="add_student('`+response.students[i]._id +`', this)"></button></h3>`);
+              }
+
+             }
+           });
           }
+
           let count = 0;
           function add_student(x, y) {
-            console.log(x)
+            console.log(x);
             students_in_discipline.map(function(m) {
               if(m === x) {
                 return count = 1;
@@ -229,35 +266,13 @@
       </div>
 
       <div class="tab3">
-        <style media="screen">
-          .tab3_add {
-            width: 20px;
-            height: 20px;
-            background: url('../img/round-add-button_icon-icons.com_72595.png');
-            background-position: center;
-            background-size: cover;
-            border: none;
-            outline: none;
-            cursor: pointer;
-          }
-          .check {
-            background: url('../img/Tick_Mark_icon-icons.com_69146.png');
-            background-size: cover;
-          }
-        </style>
             <a href="#" class="overlay" id="add_student" onclick="location.reload();"></a>
             <div class="popup" >
                 <div class="add_student">
                   <div class="form">
                     <div class="tab-content">
-                      <form action="" method="">
-                        <% for (var i = 0; i < students.length; i++) {%>
-                          <h3><%=students[i].name%> <%=students[i].surname%>
-                          <button type="button" name="button" class="tab3_add" id="submit3" onclick="add_student('<%=students[i]._id%>', this)"></button>
-                        </h1>
+                      <div id="lefted_student"></div>
 
-                        <% } %>
-                      </form>
                     </div>
                   </div>
                 </div>

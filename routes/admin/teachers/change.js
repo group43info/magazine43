@@ -9,7 +9,7 @@ var confirmnumber = randomChars.get(8);
 exports.get = function(req, res) {
   mongoose.connection.db.collection('teachers').find().toArray(function(err, docs) {
     if (err) throw err;
-    mongoose.connection.db.collection('teachers').find().toArray(function(err, disciplines) {
+    mongoose.connection.db.collection('disciplines').find().toArray(function(err, disciplines) {
       if (err) throw err;
         res.render('admin/teachers', {teachers: docs, disciplines: disciplines});
     });
