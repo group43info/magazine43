@@ -76,14 +76,23 @@
                 <form action="" method="">
                   <div class="field-wrap">
                     <div class="select">
-					 <select id="cd-dropdown" class="cd-select">
+					 <!-- <select >
 					    <option value="0" selected>Вкажіть оцінку</option>
 					    <option value="1" class="icon-monkey">1</option>
 					    <option value="2" class="icon-bear">2</option>
 					    <option value="3" class="icon-squirrel">3</option>
 					    <option value="4" class="icon-elephant">4</option>
 					    <option value="5" class="icon-elephant">5</option>
-					</select>
+					</select> -->
+					
+					<input id="cd-dropdown" class="cd-select" type="text" size=16 class="num_only" value="" placeholder="Введіть значення" onkeyup="this.value=this.value.replace(/[^0-9]+/g,''); isright(this);">
+					<script>
+					function isright(obj)
+					{
+					if (obj.value>100) obj.value=100; 
+					if (obj.value<0) obj.value=0;
+					}
+				</script>
 					</div>
                   </div>
                   <button class="button button-block" id="submit2" onclick="changefield()">Зберегти</button>
