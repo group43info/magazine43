@@ -50,21 +50,21 @@ exports.post = function(req, res) {
     );
 
   } else if(url.pathname === '/admin/discipline/check') {
-      mongoose.connection.db.collection('disciplines').findOne({_id: ObjectID(req.body.id)},function(err, doc) {
+      mongoose.connection.db.collection('disciplines').findOne({_id: ObjectID(req.body.id)}, function(err, doc) {
     if (err) throw err;
     if(doc){
-      console.log(doc)
     mongoose.connection.db.collection('students').find().toArray(function(err, students) {
       if (err) throw err;
-      var students_to_list_id = [];
-      var students_to_list = students;
-      var index;
-      for(var i = 0; i < students.length; i++) {
-        students_to_list_id[i] = String(students[i]._id);
-      }
       if(students) {
+        var students_to_list_id = [];
+        var students_to_list = students;
+        var index;
+        for(var i = 0; i < students.length; i++) {
+          students_to_list_id[i] = String(students[i]._id);
+        }
             for (var i = 0; i < students.length; i++) {
               for (var j  = 0; j < doc.students.length; j++) {
+                console.log(students[i]);
                 if(students[i]._id == doc.students[j]) {
                   index = students_to_list_id.indexOf(doc.students[j]);
                   students_to_list_id.splice(index, 1);
@@ -72,6 +72,7 @@ exports.post = function(req, res) {
                 }
               }
             }
+            console.log(students_to_list);
     res.send({students: students_to_list});
       } else {
         console.log('Not found Students!')

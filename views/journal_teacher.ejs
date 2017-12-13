@@ -10,6 +10,15 @@
   </script>
 </head>
 <body>
+	<style>
+		th {
+			width: 100px;
+			height: 40px;
+			max-width: 100px !important;
+			max-height: 40px !important;
+			overflow: hidden;
+		}
+	</style>
 	<header>
 		<%=discipline%>. Журнал оцінок.
 		<div class="butt">
@@ -36,13 +45,12 @@
     <tr id="date">
       <th rowspan="2">Cписок<br>студентів</th>
          <% for (var n = 0; n < date.length; n++) {%>
-     	<th><%=date[n]%></th>
+     	<th><a href='#addDate'><span onclick="giveTheme('<%=n%>'), getThis(this)"><%=date[n]%><span></a></th>
      	<%}%>
     </tr>
-    
      <tr id="theme">
-		<% for (var n = 0; n < date.length; n++) {%>
-     	<th>Тема</th>
+		<% for (var k = 0; k < theme.length; k++) {%>
+     	<th><a href='#addTheme'><span class="theme" onclick="giveTheme('<%=k%>'), getThis(this)"><%=theme[k]%></span></a></th>
      	<%}%>
      	
      </tr>
@@ -51,7 +59,7 @@
 		<td class="nameofstudent"><%= students[i].name%> <%= students[i].surname%> </td>
 		<% for (var j = 0; j < marks.length; j++) {%>
 		<td><span><%=marks[j][i]%></span><a href="#givemark" class="formark" 
-				onclick="giveMark(<%=i%>,'<%=students[i].name%>','<%=students[i].surname%>'), getThis(this)"><img src="../img/pencil.png" alt="" class="pencil"></a></td>
+				onclick="giveMark(<%=j%>,<%=i%>,'<%=students[i].name%>','<%=students[i].surname%>'), getThis(this)"><img src="../img/pencil.png" alt="" class="pencil"></a></td>
 		<% } %>
      </tr>
      <% } %>
@@ -92,15 +100,26 @@
           <div class="addTheme">
             <div class="form">
               <div class="tab-content">
-                <form action="" method="">
                   <div class="field-wrap">
                     <input type="text" required autocomplete="on" name='themetoServer' id="themetoServer" placeholder="Введiть тему"/>
                   </div>
+                  <button class="button button-block" id="submit" onclick="changefield()">Зберегти</button>
+              </div>
+            </div>
+          </div>
+       <a class="close" title="Закрыть" href="#"></a>
+       </div>
+    </div>
+        <div class="tab3">
+      <a href="#" class="overlay" id="addDate" onclick=""></a>
+      <div class="popup">
+          <div class="addDate">
+            <div class="form">
+              <div class="tab-content">
                   <div class="field-wrap">
                     <input type="date" required  name='datetoSever' id="datetoSever"/>
                   </div>
-                  <button class="button button-block" id="submit" onclick="changefield()">Зберегти</button>
-                </form>
+                  <button class="button button-block" id="submit3" onclick="alert('WTF')">Зберегти дату</button>
               </div>
             </div>
           </div>
@@ -112,6 +131,7 @@
     	var students_name = [];
     	var number_of_student = -1;
     	var date = -1;
+    	let date_to_server = new Date();
     		students_id = [];
     		'<% for (var i = 0; i < students.length; i++) {%>'
     			students_name.push('<%=students[i].name%>' + '<%=students[i].surname%>');
@@ -119,7 +139,16 @@
     		'<%}%>'
     	
 		var count = 0;
-
+		let position_of_theme;
+		function giveTheme(i) {
+			console.log(i);
+			position_of_theme = i;
+		}
+		let position_of_this = 'Test';
+		function getThis(thiss) {
+			position_of_this = thiss; 
+		}
+	var count_of_theme = '<%=theme.length%>';
 		function new_theme(){
 			let date = document.getElementById('date');
 			let theme = document.getElementById('theme');
@@ -128,14 +157,16 @@
 			let date_insert = new Date();
 			let theme_insert = 'Тема';
 			let marks = document.getElementsByClassName('mark');
+			
 			theme_insert.title = 'Test';
 			let btn_marks = [];
 			'<% for (var i = 0; i < students.length; i++) {%>'
 			btn_marks.push(`<span></span><a href="#givemark" class="formark" 
-				onclick="giveMark(<%=i%>,'<%=students[i].name%>','<%=students[i].surname%>'),  getThis(this)"><img src="../img/pencil.png" alt="" class="pencil"></a>`);
+				onclick="giveMark(` + count_of_theme +`,<%=i%>,'<%=students[i].name%>','<%=students[i].surname%>'),  getThis(this)"><img src="../img/pencil.png" alt="" class="pencil"></a>`);
 			'<%}%>'
-			th1.innerHTML = '<a href="#addTheme"><span>'+ date_insert.getDate() + '/' + date_insert.getMonth() + '</span></a>';
-			th2.innerHTML = '<a href="#addTheme"><span class="theme">Введiть тему</span></a>';
+			th1.innerHTML = `<a href="#addDate"><span onclick="giveTheme('` + count_of_theme + `'), getThis(this)">`+ date_insert.getDate() + `/` + date_insert.getMonth() + `</span></a>`;
+			th2.innerHTML = `<a href="#addTheme"><span class="theme" onclick="giveTheme('` + count_of_theme +`'), getThis(this)">Введiть тему</span></a>`;
+			count_of_theme++;
 			for (let i = 0; i < marks.length; i++) {
 				var cell = marks[i].insertCell(-1);
 				cell.innerHTML = btn_marks[i];
@@ -154,47 +185,61 @@
 	        type: 'POST',
 	        data: toServer,
 	        cache: false,
-	        success: function(response) {
-	          var theme = document.getElementsByClassName('theme');
-	          
+	        theme: theme,
+	        success: function(response) {	          
 	        }
 	      });
 	      
 		  $('#themetoServer, #datetoSever').val('');
 		}
-		let position_of_mark = 'Test';
-		function giveMark(x, name, surname) {
+		
+		function giveMark(n, x, name, surname) {
 			$('#valueofmark').text(name + ' ' + surname);
 			number_of_student = x;
+			position_of_theme = n;
+			
 		}
-		function getThis(thiss) {
-			position_of_mark = thiss;
-			console.log(thiss);
-		}
+		submit3.onclick = function(event) {
+	      	event.preventDefault();
+	      	let date = document.querySelector('input[type="date"]');
+	      	var toServer = {
+	      		date: date.value,
+	      		position_of_theme: position_of_theme
+      		}
+	      	console.log(date.value);
+	      	$.ajax({
+	        url: paramsId + '/addDate',
+	        type: 'POST',
+	        data: toServer,
+	        cache: false,
+	        success: function(response) {
+	        	position_of_this.innerHTML = response.date;
+	        }
+	      });
+	      };
 
+		submit.onclick = function(event) {
+	    	event.preventDefault();
+	    	let theme = document.getElementById('themetoServer').value;
+	    	var toServer = {
+	       		theme: theme,
+	       		date: date_to_server.getDate() + '/' + date_to_server.getMonth(),
+	       		position_of_theme: position_of_theme
+      	}
 
-		// submit.onclick = function(event) {
-	 //    	event.preventDefault();
-	 //    	let theme = document.getElementById('themetoServer').value;
-	 //    	let date = document.getElementById('datetoSever').value;
-	 //    	var toServer = {
-	 //       		theme: theme,
-	 //       		date: date
-  //     	}
-
-	 //      $.ajax({
-	 //        url: paramsId + '/addTheme',
-	 //        type: 'POST',
-	 //        data: toServer,
-	 //        cache: false,
-	 //        success: function(response) {
-	 //          var theme = document.getElementsByClassName('theme');
+	      $.ajax({
+	        url: paramsId + '/inputTheme',
+	        type: 'POST',
+	        data: toServer,
+	        cache: false,
+	        success: function(response) {
+	          position_of_this.innerHTML = response.theme;
 	          
-	 //        }
-	 //      });
+	        }
+	      });
 	      
-		//   $('#themetoServer, #datetoSever').val('');
-	 //        }
+		  $('#themetoServer').val('');
+	        }
 	        submit2.onclick = function(event) {
 	    	event.preventDefault();
 	    	let date_to_server = new Date();
@@ -202,7 +247,8 @@
 	    	var toServer = {
 	       		mark: selectvalue,
 	       		number_of_student: number_of_student,
-	       		date: date_to_server.getDate() + '/' + date_to_server.getMonth()
+	       		date: date_to_server.getDate() + '/' + date_to_server.getMonth(),
+	       		position_of_theme: position_of_theme
 	       		// document.getElementById('datetoSever') ? document.getElementById('datetoSever').value; :'date_insert'
       	}
 	      $.ajax({
@@ -211,13 +257,25 @@
 	        data: toServer,
 	        cache: false,
 	        success: function(response) {
-	        	position_of_mark.previousElementSibling.innerHTML = response.mark; //innerHTML = response.mark;
+	        	position_of_this.previousElementSibling.innerHTML = response.mark; //innerHTML = response.mark;
 
 	        }
 	      });
-	      
 		  $('#cd-dropdown').val('');
 	        }
+	        $(document).ready(function() {
+	        	var themes = document.getElementsByClassName('theme');
+	        	var mas_of_text = [];
+	        	for (var i = 0; i < themes.length; i++) {
+	        		mas_of_text.push(themes[i].innerHTML);
+	        		themes[i].title = themes[i].innerHTML;
+	        		if(themes[i].innerHTML.length > 49) {
+	        			themes[i].innerHTML = themes[i].innerHTML.substring(0, 20) + '...';
+	        		}
+	        	}
+	        	
+	        });
+
     </script>
   	<script src='../js/journal_teacher.js'>
   	

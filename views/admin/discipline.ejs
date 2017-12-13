@@ -102,8 +102,10 @@
              data: {id:x},
              cache: false,
              success: function(response) {
+              alert(response.students.length);
               for(var i = 0; i < response.students.length; i++){
-                $('#lefted_student').html(`<h3>`+response.students[i].name + response.students[i].name +`<button type="button" name="button" class="tab3_add" id="submit3" onclick="add_student('`+response.students[i]._id +`', this)"></button></h3>`);
+                document.getElementById('lefted_student').innerHTML += `<h3>`+response.students[i].name + response.students[i].surname +`<button type="button" name="button" class="tab3_add" id="submit3" onclick="add_student('`+response.students[i]._id +`', this)"></button></h3>`;
+                // $('#lefted_student').html(`<h3>`+response.students[i].name + response.students[i].name +`<button type="button" name="button" class="tab3_add" id="submit3" onclick="add_student('`+response.students[i]._id +`', this)"></button></h3>`);
               }
 
              }

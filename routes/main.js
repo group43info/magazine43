@@ -6,14 +6,37 @@ exports.get = function(req, res) {
     res.sendStatus(404);
   } else {
       var url = require('url').parse(req.url);
-      console.log(url);
+      let disciplines_id = [];
+      let disciplines = [];
+      let index;
       mongoose.connection.db.collection('disciplines').find().toArray(function(err, docs) {
         if (err) throw err;
-        mongoose.connection.db.collection('users').findOne({_id: ObjectID(req.session.user)}, function(err, doc) {
+        disciplines = docs;
+        mongoose.connection.db.collection('teachers').findOne({_id: ObjectID(req.session.user)}, function(err, teacher) {
+          if(err) throw err;
+          if(teacher) {
+            if(teacher.disciplines.length === 0) {
+              disciplines = [];
+            } else {
+              for (var i = 0; i < docs.length; i++){
+                for (var j = 0; j < teacher.disciplines.length; j++){
+                  if((String(docs[i]._id) !== teacher.disciplines[j])) {
+                    disciplines.splice(i, 1);
+                  }
+                }
+              }
+            }
+            console.log('disciplines ' + disciplines);
+            res.render('index', {user: teacher, disciplines: disciplines});
+          } else {
+            mongoose.connection.db.collection('users').findOne({_id: ObjectID(req.session.user)}, function(err, doc) {
           if (err) throw err;
-          // var user = doc;
-          res.render('index', {user: doc, disciplines: docs});
+
         });
+          }
+        });
+        
+        
       });
 
   }

@@ -45,7 +45,7 @@ app.use(session(sess));
   app.post('/admin/discipline/add', require('./admin/discipline/change').post);
   app.post('/admin/discipline/edit', require('./admin/discipline/change').post);
   app.post('/admin/discipline/delete', require('./admin/discipline/change').post);
-    app.post('/admin/discipline/check', require('./admin/discipline/change').post);
+  app.post('/admin/discipline/check', require('./admin/discipline/change').post);
   app.post('/admin/discipline/add_student', require('./admin/discipline/change').post);
 
   // students post
@@ -55,6 +55,8 @@ app.use(session(sess));
   // teachers post
   app.post('/admin/teachers/add', require('./admin/teachers/change').post);
   app.post('/admin/teachers/edit', require('./admin/teachers/change').post);
+  app.post('/admin/teachers/check', require('./admin/teachers/change').post);
+  app.post('/admin/teachers/add_discipline', require('./admin/teachers/change').post);
   app.post('/admin/teachers/delete', require('./admin/teachers/change').post);
   app.get('/index/*', require('./jornal').get);
   // jornal post

@@ -9,6 +9,30 @@
   </script>
 </head>
 <body>
+  <style>
+            .tab3_add {
+            width: 20px;
+            height: 20px;
+            background: url('../img/round-add-button_icon-icons.com_72595.png');
+            background-position: center;
+            background-size: cover;
+            border: none;
+            outline: none;
+            cursor: pointer;
+          }
+          .check {
+            width: 20px;
+            height: 20px;
+            background: url('../img/round-add-button_icon-icons.com_72595.png');
+            background-position: center;
+            background-size: cover;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            background: url('../img/Tick_Mark_icon-icons.com_69146.png');
+            background-size: cover;
+          }
+  </style>
 	<header>
 		Admin Panel
 		<div class="butt">
@@ -39,6 +63,65 @@
     $('.selectdisciplines').click(function() {
       alert($('.selectdisciplines').text());
     });
+    let course_of_teacher = [];
+    let teacher_id;
+    function numberOfteacher(id, x) {
+      '<% for(var i = 0; i < teachers.length; i++)  {%>'
+                if('<%=i%>' === String(x)) {
+                  course_of_teacher = '<%= teachers[i].courses %>';
+                }
+            '<%}%>'
+            course_of_teacher = course_of_teacher.split(',');
+            teacher_id = id;
+            $.ajax({
+             url: '/admin/teachers/check',
+             type: 'POST',
+             data: {id:id},
+             cache: false,
+             success: function(response) {
+            alert(response.disciplines.length);
+            document.getElementById('list_of_course').innerHTML = [];
+                  for(var i = 0; i < response.disciplines.length; i++){
+                    document.getElementById('list_of_course').innerHTML += `<h3>`+response.disciplines[i].name +`<button type="button" name="button" class="tab3_add" id="submit3" onclick="add_discipline('` + response.disciplines[i]._id + `', this)"></button></h3>`;
+                  }
+             }
+           });
+    }
+              let count = 0;
+          function add_discipline(x, y) {
+            console.log(x);
+            course_of_teacher.map(function(m) {
+              if(m === x) {
+                return count = 1;
+              }
+            });
+
+            if (count === 0){
+            y.style=`
+                      background: url('../img/Tick_Mark_icon-icons.com_69146.png');
+                      background-size: cover;
+                      `;
+            var toServer = {
+              teacher_id: teacher_id,
+              discipline_id:x
+            }
+            $.ajax({
+              url: '/admin/teachers/add_discipline',
+              type: 'POST',
+              data: toServer,
+              cache: false,
+              success: function(response) {
+                console.log('success');
+              }
+            });
+            count = 0;
+          alert('success');
+          } else {
+            alert('bad');
+            count = 0;
+          }
+
+          } 
     </script>
        <div class="jlinc">
        <a href="../../admin/general" class="buton" id="ad" >На головну</a>
@@ -66,7 +149,8 @@
         <a type="button" class="buton" name="button" href='#delete' onclick="remove('<%= teachers[i]._id%>', this)">Видалити</a>
       </td>
        <td class="hover_setting" style='display:none'>
-      <a href="#add_course"  type="button" name="button" class="buton" id="" >Додати курс</a>
+      <a href="#add_course"  type="button" name="button" class="buton" id=""  
+      onclick="numberOfteacher('<%=teachers[i]._id%>', <%=i%>)">Додати курс</a>
       </td>
     </tr>
     <%}%>
@@ -142,9 +226,7 @@
                 <div class="tab-content">
                   <form action="" method="">
                     <div class="field-wrap">
-                      <% for(var i = 0; i < disciplines.length; i++) {%>
-                      
-                      <%}%>
+                      <div id="list_of_course"></div>
                     </div>
                     <button class="button button-block" id="submit3" >Додати</button>
                   </form>
