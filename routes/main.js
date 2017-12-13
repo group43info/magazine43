@@ -29,9 +29,10 @@ exports.get = function(req, res) {
             console.log('disciplines ' + disciplines);
             res.render('index', {user: teacher, disciplines: disciplines});
           } else {
+            console.log('test')
             mongoose.connection.db.collection('users').findOne({_id: ObjectID(req.session.user)}, function(err, doc) {
           if (err) throw err;
-
+            res.render('index', {user: doc, disciplines: disciplines});
         });
           }
         });
