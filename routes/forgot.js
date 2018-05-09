@@ -1,4 +1,3 @@
-
 var randomChars = require('random-chars');
 var sendMessage = require('../libs/nodemailer');
 var confirmnumber = randomChars.get(8);
@@ -7,8 +6,11 @@ var ObjectID = require('mongodb').ObjectID;
 var User = require('../models/users.js').User;
 var AuthError = require('../models/users.js').AuthError;
 exports.post = function(req, res, next) {
+  console.log(req.body);
   var email = req.body.email;
-  mongoose.connection.db.collection('users').findOne({username: email}, function(err, doc) {
+  mongoose.connection.db.collection('users').findOne({
+    username: email
+  }, function(err, doc) {
     if (err) throw err;
     if (doc) {
       sendMessage(confirmnumber, email);
@@ -21,7 +23,7 @@ exports.post = function(req, res, next) {
           }
         }
       });
-        res.send('Ваш пароль відіслано на пошту!');
+      res.send('Ваш пароль відіслано на пошту!');
 
     } else {
       res.send('Коричтувач з цією поштою не зареєстрований!');

@@ -1,194 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Admin Panel</title>
-  <link rel="stylesheet" type="text/css" href="../css/main.css">
-  <link rel="stylesheet" type="text/css" href="../css/window.css">
-  <script type="text/javascript" src="../js/jquery.min.js">
-  </script>
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+	<link rel="stylesheet" type="text/css" href="../css/window.css">
+	<link rel="stylesheet" href="/css/admin.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+	<script type="text/javascript" src="../js/jquery.min.js">
+	</script>
 </head>
+
 <body>
 	<header>
-		Admin Panel
-		<div class="butt">
- 	 		<a href="../login">Вихід</a>
-
-		</div>
-		<div class="butt">
- 			Користувач
-		</div>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="general">
+<img src="../img/mechanics.png" class="nav-logo"  alt="">
+	<span class="nav-name"> Панель управління	</span>
+	</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+			<div class="collapse navbar-collapse" id="navbarText">
+				<span class="navbar-text ml-auto">
+				<div class="butt">
+						Адмін
+				</div>
+		</span>
+				<span class="navbar-text">
+			<div class="butt">
+				<a href="../login"><img src="../img/logout.png" class="logout" alt="" title="Вихід"> </a>
+			</div>
+	</span>
+			</div>
+		</nav>
 	</header>
-  <div class="sidebar">
-    <script type="text/javascript">
-    function remove(x, e) {
-      e.parentNode.parentNode.style = 'display:none';
-      var toServer = {
-        _id: x
-      }
-      $.ajax({
-        url: '/admin/users/delete',
-        type: 'POST',
-        data: toServer,
-        cache: false,
-        success: function(response) {
-          console.log('success');
-        }
-      });
-    }
-    $('.selectdisciplines').click(function() {
-      alert($('.selectdisciplines').text());
-    });
-    </script>
-       <div class="jlinc">
-       <a href="../../admin/general" class="buton" id="ad" >На головну</a>
-         </div>
-		<div class="jlinc">
-	    <a href="#" class="buton" id="setting" >Редагувати дані користувача</a>
-  	</div>
-  </div>
-  <div class="">
-    <table class="users">
-      <tr>
-        <td><h4>Ім'я</h4></td>
-        <td><h4>Прізвище</h4></td>
-        <td><h4>Email</h4></td>
-        <td><h4>Cтатус</h4></td>
-        <td><h4>Id</h4></td>
-      </tr>
-      <%for (var i = 0; i < users.length; i++) {%>
-        <tr>
-      <td>
-        <h4><%=users[i].name%></h4>
-      </td>
-      <td>
-        <h4><%=users[i].surname%></h4>
-      </td>
-      <td>
-        <h4><%=users[i].username%></h4>
-      </td>
-      <td>
-        <h4><%=users[i].role%></h4>
-      </td>
-      <td>
-        <h4><%=users[i]._id%></h4>
-      </td>
-      <td class="hover_setting" style='display:none'>
-        <a href='#edit' type="button" class="buton testing" name="button" >Редагувати</a>
-      </td>
-      <td class="hover_setting" style='display:none'>
-        <a type="button" class="buton" name="button" href='#delete'>Видалити</a>
-      </td>
-    </tr>
-    <%}%>
-    </table>
-  </div>
-  <div class="tab1">
-      <a href="#" class="overlay" id="add" onclick="location.href = '/admin/users';"></a>
-      <div class="popup">
-          <div class="add">
-            <div class="form">
-              <div class="tab-content">
-                <form action="" method="">
-                  <div class="field-wrap">
-                    <input type="text" required autocomplete="on" name='name' id="name" placeholder="Ім'я викладача"/>
-                  </div>
-                  <div class="field-wrap">
-                    <input type="text" required autocomplete="on" name='surname' id="surname" placeholder="Прізвище викладача"/>
-                  </div>
-                  <div class="field-wrap">
-                    <input type="text" required autocomplete="on" name='email' id="email" placeholder="Пошта вик викладача"/>
-                  </div>
-                  <div class="field-wrap">
-                    <input type="text" required autocomplete="on" name='password' id="password" placeholder="Пароль для викладача"/>
-                  </div>
-                  <div class="field-wrap">
-                    <h1>Задайте групи для викладача</h1>
-                  </div>
-                  <button class="button button-block" id="submit" >Додати</button>
-                </form>
-              </div>
-            </div>
-          </div>
-       <a class="close" title="Закрыть" href="#" onclick="location.reload()"></a>
-       </div>
-    </div>
 
-  <div class="tab2">
-        <a href="#" class="overlay" id="edit"></a>
-        <div class="popup">
-            <div class="add">
-              <div class="form">
-                <div class="tab-content">
-                  <form action="" method="">
-                    <div class="field-wrap">
-                      <input type="text" required autocomplete="on" name='rename' id="rename" placeholder="Ім'я викладача"/>
-                    </div>
-                    <div class="field-wrap">
-                      <input type="text" required autocomplete="on" name='resurname' id="resurname" placeholder="Прізвище викладача"/>
-                    </div>
-                    <div class="field-wrap">
-                      <input type="text" required autocomplete="on" name='reemail' id="reemail" placeholder="Пошта викладача"/>
-                    </div>
-                    <div class="field-wrap">
-                      <input type="text" required autocomplete="on" name='repassword' id="repassword" placeholder="Пароль для викладача"/>
-                    </div>
-                    <button class="button button-block" id="submit2" >Редагувати</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-         <a class="close" title="Закрыть" href="#" ></a>
-         <script type="text/javascript">
-         $('#setting').toggle(function() {
-           $('.hover_setting').css('display', 'table-cell');
-           }, function() {
-                $('.hover_setting').css('display', 'none');
-           }
-         );
+	<script type="text/javascript">
+		function remove(x, e) {
+			e.parentNode.parentNode.style = 'display:none';
+			var toServer = {
+				_id: x
+			}
+			$.ajax({
+				url: '/admin/users/delete',
+				type: 'POST',
+				data: toServer,
+				cache: false,
+				success: function(response) {
+					console.log('success');
+				}
+			});
+		}
+		$('.selectdisciplines').click(function() {
+			alert($('.selectdisciplines').text());
+		});
+	</script>
+	<div class="sidebar">
+		<ul>
+			<li>
+				<div class="logo">
+					<img src="../img/edit.png" alt="">
+				</div>
+			</li>
+			<li>
+				<div class="input-group">
+					<a href="#add" class="btn edit-button" id="ad" onclick="add()"><span class="input-group-addon"><i class="fa fa-book"></i></span>
+						<span class="input-group-addon nav-button">На головну</span></a>
+				</div>
+			</li>
+			<li>
+				<div class="input-group">
+					<a href="#" class="btn edit-button" id="setting"><span class="input-group-addon"><i class="fa fa-cut"></i></span>
+						<span class="input-group-addon nav-button">Редагувати дані користувача</span></a>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="">
+		<table class="users">
+			<tr>
+				<td>
+					<h4>Ім'я</h4></td>
+				<td>
+					<h4>Прізвище</h4></td>
+				<td>
+					<h4>Email</h4></td>
+				<td>
+					<h4>Cтатус</h4></td>
+				<td>
+					<h4>Id</h4></td>
+			</tr>
+			<%for (var i = 0; i < users.length; i++) {%>
+				<tr>
+					<td>
+						<h4><%=users[i].name%></h4>
+					</td>
+					<td>
+						<h4><%=users[i].surname%></h4>
+					</td>
+					<td>
+						<h4><%=users[i].username%></h4>
+					</td>
+					<td>
+						<h4><%=users[i].role%></h4>
+					</td>
+					<td>
+						<h4><%=users[i]._id%></h4>
+					</td>
+					<td class="hover_setting" style='display:none'>
+						<a href='#edit' type="button" class="buton testing" name="button">Редагувати</a>
+					</td>
+					<td class="hover_setting" style='display:none'>
+						<a type="button" class="buton" name="button" href='#delete'>Видалити</a>
+					</td>
+				</tr>
+				<%}%>
+		</table>
+	</div>
+	<div class="tab1">
+		<a href="#" class="overlay" id="add" onclick="location.href = '/admin/users';"></a>
+		<div class="popup">
+			<div class="add">
+				<div class="form">
+					<div class="tab-content">
+						<form action="" method="">
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='name' id="name" placeholder="Ім'я викладача" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='surname' id="surname" placeholder="Прізвище викладача" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='email' id="email" placeholder="Пошта вик викладача" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='password' id="password" placeholder="Пароль для викладача" />
+							</div>
+							<div class="field-wrap">
+								<h1>Задайте групи для викладача</h1>
+							</div>
+							<button class="button button-block" id="submit">Додати</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<a class="close" title="Закрыть" href="#" onclick="location.reload()"></a>
+		</div>
+	</div>
+
+	<div class="tab2">
+		<a href="#" class="overlay" id="edit"></a>
+		<div class="popup">
+			<div class="add">
+				<div class="form">
+					<div class="tab-content">
+						<form action="" method="">
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='rename' id="rename" placeholder="Ім'я викладача" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='resurname' id="resurname" placeholder="Прізвище викладача" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='reemail' id="reemail" placeholder="Пошта викладача" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='repassword' id="repassword" placeholder="Пароль для викладача" />
+							</div>
+							<button class="button button-block" id="submit2">Редагувати</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<a class="close" title="Закрыть" href="#"></a>
+			<script type="text/javascript">
+				$('#setting').toggle(function() {
+					$('.hover_setting').css('display', 'table-cell');
+				}, function() {
+					$('.hover_setting').css('display', 'none');
+				});
 
 
-        var res;
-         var qwe = document.getElementsByClassName('testing');
-         $('.testing').click(function() {
+				var res;
+				var qwe = document.getElementsByClassName('testing');
+				$('.testing').click(function() {
 
-           console.log(qwe);
-           for (var i = 0; i < qwe.length; i ++) {
-            if(this === qwe[i]) {
-              res = i;
-            }
-           }
+					console.log(qwe);
+					for (var i = 0; i < qwe.length; i++) {
+						if (this === qwe[i]) {
+							res = i;
+						}
+					}
 
-         submit2.onclick = function(event) {
-           var mas = [];
-           event.preventDefault();
-           var test = document.getElementsByClassName('td');
-           var toServer = {
-             _id: mas[res],
-             rename: $('#rename').val(),
-             resurname: $('#resurname').val(),
-             reemail: $('#reemail').val(),
-             repassword: $('#repassword').val()
-           }
-           $.ajax({
-             url: '/admin/users/edit',
-             type: 'POST',
-             data: toServer,
-             cache: false,
-             success: function(response) {
-               if(response.status === 'bad') {
-                alert('Ця пошта вже використовується!')
-               }
-             }
+					submit2.onclick = function(event) {
+						var mas = [];
+						event.preventDefault();
+						var test = document.getElementsByClassName('td');
+						var toServer = {
+							_id: mas[res],
+							rename: $('#rename').val(),
+							resurname: $('#resurname').val(),
+							reemail: $('#reemail').val(),
+							repassword: $('#repassword').val()
+						}
+						$.ajax({
+							url: '/admin/users/edit',
+							type: 'POST',
+							data: toServer,
+							cache: false,
+							success: function(response) {
+								if (response.status === 'bad') {
+									alert('Ця пошта вже використовується!')
+								}
+							}
 
-           });
-          $('#rediscipline, #rename, #resurname, #reemail, #repassword').val('');
-         };
-          });
-         </script>
-         </div>
-      </div>
-      <script type="text/javascript" src="../../js/users.js">
-      </script>
+						});
+						$('#rediscipline, #rename, #resurname, #reemail, #repassword').val('');
+					};
+				});
+			</script>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../js/users.js">
+	</script>
 </body>
+
 </html>

@@ -1,35 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-	<meta charset="UTF-8">
-	<title>Admin Panel</title>
-	<link rel="stylesheet" type="text/css" href="../css/main.css">
+	<meta charset="utf-8">
+	<title></title>
+	<link rel="stylesheet" href="/css/admin.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 </head>
+
 <body>
 	<header>
-		Admin Panel
-		<div class="butt">
- 	 		<a href="../login">Вихід</a>
-
-		</div>
-		<div class="butt">
- 			Користувач
-		</div>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="general">
+<img src="../img/mechanics.png" class="nav-logo"  alt="">
+	<span class="nav-name"> Панель управління	</span>
+	</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+			<div class="collapse navbar-collapse" id="navbarText">
+				<span class="navbar-text ml-auto">
+				<div class="butt">
+						Адмін
+				</div>
+		</span>
+				<span class="navbar-text">
+			<div class="butt">
+				<a href="../login"><img src="../img/logout.png" class="logout" alt="" title="Вихід"> </a>
+			</div>
+	</span>
+			</div>
+		</nav>
 	</header>
-	<div class="sidebar">
-	   <div class="jlinc">
-	    <a href="discipline" class="buton" >Список дисциплін</a>
-	   </div>
-		<div class="jlinc">
-	    <a href="students" class="buton">Список студентів</a>
-  	</div>
-    <div class="jlinc">
-      <a href="teachers" class="buton">Список викладачів</a>
-    </div>
-    <div class="jlinc">
-      <a href="users" class="buton">Список користувачів</a>
-    </div>
-  </div>
 
+	<main>
+		<section id="team" class="pb-5">
+			<div class="container">
+				<h5 class="section-title h1">Виберіть пункт редагування</h5>
+				<div class="row">
+					<!-- Team member -->
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+							<div class="mainflip">
+								<div class="frontside">
+									<div class="card">
+										<div class="card-body text-center">
+											<p><img class=" img-fluid" src="../img/books_list.png" alt="card image"></p>
+											<h4 class="card-title">Список дисциплін</h4>
+											<hr width='100%' color='#007b5e' size='3px'>
+										</div>
+									</div>
+								</div>
+								<div class="backside">
+									<div class="card">
+										<div class="card-body text-center mt-4">
+											<h4 class="card-title">Список дисциплін</h4>
+											<p class="card-text"> У цьому розділі ви можете додавати, редагувати та видаляти дані про дисципліни</p>
+											<a href="discipline" class="btn btn-info">Список дисциплін</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- ./Team member -->
+					<!-- Team member -->
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+							<div class="mainflip">
+								<div class="frontside">
+									<div class="card">
+										<div class="card-body text-center">
+											<p><img class=" img-fluid" src="../img/students_list.png" alt="card image"></p>
+											<h4 class="card-title">Список студентів</h4>
+											<hr width='100%' color='#007b5e' size='3px'>
+										</div>
+									</div>
+								</div>
+								<div class="backside">
+									<div class="card">
+										<div class="card-body text-center mt-4">
+											<h4 class="card-title">Список студентів</h4>
+											<p class="card-text">У цьому розділі ви можете додавати, редагувати та видаляти дані про студентів</p>
+											<a href="students" class="btn btn-info">Список студентів</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- ./Team member -->
+					<!-- Team member -->
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+							<div class="mainflip">
+								<div class="frontside">
+									<div class="card">
+										<div class="card-body text-center">
+											<p><img class=" img-fluid" src="../img/teacgers_list.jpeg" alt="card image"></p>
+											<h4 class="card-title">Список викладачів</h4>
+											<hr width='100%' color='#007b5e' size='3px'>
+										</div>
+									</div>
+								</div>
+								<div class="backside">
+									<div class="card">
+										<div class="card-body text-center mt-4">
+											<h4 class="card-title">Список викладачів</h4>
+											<p class="card-text">У цьому розділі ви можете додавати, редагувати та видаляти дані про викладачів</p>
+											<a href="teachers" class="btn btn-info">Список викладачів</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- ./Team member -->
+					<!-- Team member -->
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+							<div class="mainflip">
+								<div class="frontside">
+									<div class="card">
+										<div class="card-body text-center">
+											<p><img class=" img-fluid" src="../img/users_list.png" alt="card image"></p>
+											<h4 class="card-title">Список користувачів</h4>
+											<hr width='100%' color='#007b5e' size='3px'>
+										</div>
+									</div>
+								</div>
+								<div class="backside">
+									<div class="card">
+										<div class="card-body text-center mt-4">
+											<h4 class="card-title">Список користувачів</h4>
+											<p class="card-text">У цьому розділі ви можете додавати, редагувати та видаляти дані про користувачів</p>
+											<a href="users" class="btn btn-info">Список користувачів</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- ./Team member -->
+					<!-- Team member -->
+					<div class="col-xs-12 col-sm-6 col-md-4">
+						<div class="image-flip" ontouchstart="this.classList.toggle('hover');">
+							<div class="mainflip">
+								<div class="frontside">
+									<div class="card">
+										<div class="card-body text-center">
+											<p><img class=" img-fluid" src="../img/message.png" alt="card image"></p>
+											<h4 class="card-title">Повідомлення</h4>
+										</div>
+									</div>
+								</div>
+								<div class="backside">
+									<div class="card">
+										<div class="card-body text-center mt-4">
+											<h4 class="card-title">Повідомлення</h4>
+											<p class="card-text">У цьому розділі містяться повідомлення від користувачів та запити на надання доступу для користувачів</p>
+											<a href="message" class="btn btn-info">Повідомлення</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- ./Team member -->
+					<!-- Team member -->
+
+					<!-- ./Team member -->
+
+				</div>
+			</div>
+		</section>
+	</main>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 </body>
+
 </html>

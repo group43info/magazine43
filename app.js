@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
+var expressValidator = require('express-validator');
+var flash = require('connect-flash');
 var app = express();
 require('./routes')(app);
 // view engine setup
@@ -15,7 +17,9 @@ app.set('port', config.get('port'));
 // uncomment after placing your favicon in /public
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
@@ -26,7 +30,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
+app.use(expressValidator());
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -37,6 +41,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 app.listen(app.get('port'), function() {
   console.log('Work! ' + app.get('port'));
 });

@@ -7,21 +7,30 @@ var MongoStore = require('connect-mongo')(session);
 module.exports = function(app) {
   var bodyParser = require('body-parser');
   app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.urlencoded({
+    extended: false
+  }));
 
   var sess = {
     secret: config.get('session:secret'),
     key: config.get('session:key'),
     cookie: config.get('session:cookie'),
     name: 'Antares',
-    store: new MongoStore({url: 'mongodb://magazine43:qwerty43@ds119675.mlab.com:19675/magazine43'}), // connect-mongo session store
+    store: new MongoStore({
+      url: 'mongodb://magazine43:qwerty43@ds119675.mlab.com:19675/magazine43'
+    }), // connect-mongo session store
     proxy: true,
     resave: true,
     saveUninitialized: true
-};
-app.use(session(sess));
+  };
+  app.use(session(sess));
   app.get('/login', require('./login').get);
-
+  app.get('/registration', (req, res) => {
+    res.render('registration')
+  });
+  app.get('/resume', (req, res) => {
+    res.render('resume')
+  });
 
   app.get('/index', require('./main').get);
 
@@ -62,8 +71,8 @@ app.use(session(sess));
   // jornal post
   app.post('/index/*', require('./jornal').post);
 
- app.get('/marks', function(req, res) { 
-      mongoose.connection.db.collection('marks').find().toArray(function(err, docs) {
+  app.get('/marks', function(req, res) {
+    mongoose.connection.db.collection('marks').find().toArray(function(err, docs) {
       if (err) {
         res.sendStatus(500);
       } else {
@@ -71,7 +80,7 @@ app.use(session(sess));
         res.send(docs);
       }
     });
- });
+  });
   app.get('/disciplines', function(req, res) {
     mongoose.connection.db.collection('disciplines').find().toArray(function(err, docs) {
       if (err) {
@@ -138,7 +147,7 @@ app.use(session(sess));
     mongoose.connection.db.collection('teachers').remove({});
     res.sendStatus(200)
   });
-    app.delete('/delete_marks', function(req, res) {
+  app.delete('/delete_marks', function(req, res) {
     mongoose.connection.db.collection('marks').remove({});
     res.sendStatus(200)
   });

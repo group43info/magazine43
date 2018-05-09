@@ -1,179 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Admin Panel</title>
-  <link rel="stylesheet" type="text/css" href="../css/main.css">
-  <link rel="stylesheet" type="text/css" href="../css/window.css">
-  <script type="text/javascript" src="../js/jquery.min.js">
-  </script>
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+	<link rel="stylesheet" type="text/css" href="../css/window.css">
+	<script type="text/javascript" src="../js/jquery.min.js">
+	</script>
+	<link rel="stylesheet" href="/css/admin.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<script type="text/javascript" src="../js/jquery.min.js">
+	</script>
 </head>
+
 <body>
 	<header>
-		Admin Panel
-		<div class="butt">
- 	 		<a href="../login">Вихід</a>
-
-		</div>
-		<div class="butt">
- 			Користувач
-		</div>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="general">
+<img src="../img/mechanics.png" class="nav-logo"  alt="">
+	<span class="nav-name"> Панель управління	</span>
+	</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+			<div class="collapse navbar-collapse" id="navbarText">
+				<span class="navbar-text ml-auto">
+				<div class="butt">
+						Адмін
+				</div>
+		</span>
+				<span class="navbar-text">
+			<div class="butt">
+				<a href="../login"><img src="../img/logout.png" class="logout" alt="" title="Вихід"> </a>
+			</div>
+	</span>
+			</div>
+		</nav>
 	</header>
-  <div class="sidebar">
-    <script type="text/javascript">
-    function remove(x, e) {
-      e.parentNode.parentNode.style = 'display:none';
-      var toServer = {
-        _id: x
-      }
-      $.ajax({
-        url: '/admin/students/delete',
-        type: 'POST',
-        data: toServer,
-        cache: false,
-        success: function(response) {
-          console.log('success');
-        }
-      });
-    }
-    </script>
-       <div class="jlinc">
-       <a href="../../admin/general" class="buton" id="ad" >На головну</a>
-         </div>
-       <div class="jlinc">
-	    <a href="#add" class="buton" id="ad" onclick="">Додадати студента</a>
-	   </div>
-		<div class="jlinc">
-	    <a href="#" class="buton" id="setting" >Редагувати дані студента</a>
-  	</div>
-  </div>
-  <div class="student">
-    <table>
-      <% for(var i = 0; i < students.length; i++){%>
-        <tr>
-      <td class="td">
-        <h4 class="initial"><%=students[i].name%> <%=students[i].surname%></h4>
-        <h4 class="groupnumber" >Група <%=students[i].group%></h4>
-        <h4 class="hallnumber">Номер залікової книги <%=students[i].hallbook%></h4>
-      </td>
-      <td class="hover_setting">
-        <a href='#edit' type="button" class="buton testing" name="button" >Редагувати</a>
-      </td>
-      <td class="hover_setting">
-        <a type="button" class="buton" name="button" href='#delete' onclick="remove('<%= students[i]._id%>', this)">Видалити</a>
-      </td>
-    </tr>
-    <%}%>
-    </table>
-  </div>
-  <div class="tab1">
-      <a href="#" class="overlay" id="add" onclick="location.href = '/admin/students';"></a>
-      <div class="popup">
-          <div class="add">
-            <div class="form">
-              <div class="tab-content">
-                <form action="" method="">
-                  <div class="field-wrap">
-                    <input type="text" required autocomplete="on" name='name' id="name" placeholder="Ім'я студента"/>
-                  </div>
-                  <div class="field-wrap">
-                    <input type="text" required autocomplete="on" name='surname' id="surname" placeholder="Прізвище студента"/>
-                  </div>
-                  <div class="field-wrap">
-                    <input type="text" required autocomplete="on" name='group' id="group" placeholder="Група студента"/>
-                  </div>
-                  <div class="field-wrap">
-                    <input type="text" required autocomplete="on" name='hallbook' id="hallbook" placeholder="Номер залікової картки"/>
-                  </div>
-                  <button class="button button-block" id="submit" >Додати</button>
-                </form>
-              </div>
-            </div>
-          </div>
-       <a class="close" title="Закрыть" href="#" onclick="location.reload()"></a>
-       </div>
-    </div>
+	<script type="text/javascript">
+		function remove(x, e) {
+			e.parentNode.parentNode.style = 'display:none';
+			var toServer = {
+				_id: x
+			}
+			$.ajax({
+				url: '/admin/students/delete',
+				type: 'POST',
+				data: toServer,
+				cache: false,
+				success: function(response) {
+					console.log('success');
+				}
+			});
+		}
+	</script>
+	<div class="sidebar">
+		<ul>
+			<li>
+				<div class="logo">
+					<img src="../img/edit.png" alt="">
+				</div>
+			</li>
+			<li>
+				<div class="input-group">
+					<a href="#add" class="btn edit-button" id="ad" onclick="add()"><span class="input-group-addon"><i class="fa fa-book"></i></span>
+						<span class="input-group-addon nav-button">Додадати студента</span></a>
+				</div>
+			</li>
+			<li>
+				<div class="input-group">
+					<a href="#" class="btn edit-button" id="setting"><span class="input-group-addon"><i class="fa fa-cut"></i></span>
+						<span class="input-group-addon nav-button">Редагувати дані студента</span></a>
+				</div>
+			</li>
+		</ul>
+	</div>
 
-  <div class="tab2">
-        <a href="#" class="overlay" id="edit"></a>
-        <div class="popup">
-            <div class="add">
-              <div class="form">
-                <div class="tab-content">
-                  <form action="" method="">
-                    <div class="field-wrap">
-                      <input type="text" required autocomplete="on" name='rename' id="rename" placeholder="Ім'я студента"/>
-                    </div>
-                    <div class="field-wrap">
-                      <input type="text" required autocomplete="on" name='resurname' id="resurname" placeholder="Прізвище студента"/>
-                    </div>
-                    <div class="field-wrap">
-                      <input type="text" required autocomplete="on" name='regroup' id="regroup" placeholder="Група студента"/>
-                    </div>
-                    <div class="field-wrap">
-                      <input type="text" required autocomplete="on" name='rehallbook' id="rehallbook" placeholder="Номер залікової картки"/>
-                    </div>
-                    <button class="button button-block" id="submit2" >Редагувати</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-         <a class="close" title="Закрыть" href="#" ></a>
-         <script type="text/javascript">
-         $('#setting').toggle(function() {
-           $('.hover_setting').css('display', 'table-cell');
-           }, function() {
-                $('.hover_setting').css('display', 'none');
-           }
-         );
+	<div class="student">
+		<table>
+			<tr>
+				<th>ПІП</th>
+				<th>Номер групи</th>
+				<th>Номер залікової книги</th>
+				<th colspan="4" class="hover_setting" style="display: none">Опції редагування</th>
+			</tr>
+			<% for(var i = 0; i < students.length; i++){%>
+				<tr>
+					<td class="td">
+						<div class="over">
+							<h4 class="initial"><%=students[i].name%> <%=students[i].surname%></h4>
+						</div>
+					</td>
+					<td>
+						<div class="over">
+							<h4 class="groupnumber"><%=students[i].group%></h4></td>
+					</div>
+					<td>
+						<div class="over">
+							<h4 class="hallnumber"><%=students[i].hallbook%></h4>
+						</div>
+					</td>
+					<td class="hover_setting">
+						<a href='#edit' type="button" class="buton testing" name="button">Редагувати</a>
+					</td>
+					<td class="hover_setting">
+						<a type="button" class="buton" name="button" href='#delete' onclick="remove('<%= students[i]._id%>', this)">Видалити</a>
+					</td>
+				</tr>
+				<%}%>
+		</table>
+	</div>
+	<div class="tab1">
+		<a href="#" class="overlay" id="add" onclick="location.href = '/admin/students';"></a>
+		<div class="popup">
+			<div class="add">
+				<div class="form">
+					<div class="tab-content">
+						<form action="" method="">
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='name' id="name" placeholder="Ім'я студента" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='surname' id="surname" placeholder="Прізвище студента" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='group' id="group" placeholder="Група студента" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='hallbook' id="hallbook" placeholder="Номер залікової картки" />
+							</div>
+							<button class="button button-block" id="submit">Додати</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<a class="close" title="Закрыть" href="#" onclick="location.reload()"></a>
+		</div>
+	</div>
+
+	<div class="tab2">
+		<a href="#" class="overlay" id="edit"></a>
+		<div class="popup">
+			<div class="add">
+				<div class="form">
+					<div class="tab-content">
+						<form action="" method="">
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='rename' id="rename" placeholder="Ім'я студента" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='resurname' id="resurname" placeholder="Прізвище студента" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='regroup' id="regroup" placeholder="Група студента" />
+							</div>
+							<div class="field-wrap">
+								<input type="text" required autocomplete="on" name='rehallbook' id="rehallbook" placeholder="Номер залікової картки" />
+							</div>
+							<button class="button button-block" id="submit2">Редагувати</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<a class="close" title="Закрыть" href="#"></a>
+			<script type="text/javascript">
+				$('#setting').toggle(function() {
+					$('.hover_setting').css('display', 'table-cell');
+				}, function() {
+					$('.hover_setting').css('display', 'none');
+				});
 
 
-        var res;
-         var qwe = document.getElementsByClassName('testing');
-         $('.testing').click(function() {
+				var res;
+				var qwe = document.getElementsByClassName('testing');
+				$('.testing').click(function() {
 
-           console.log(qwe);
-           for (var i = 0; i < qwe.length; i ++) {
-            if(this === qwe[i]) {
-              res = i;
-            }
-           }
+					console.log(qwe);
+					for (var i = 0; i < qwe.length; i++) {
+						if (this === qwe[i]) {
+							res = i;
+						}
+					}
 
-         submit2.onclick = function(event) {
-           var mas = [];
-           '<% for(var i = 0; i < students.length; i++)  {%>'
-           mas.push('<%= students[i]._id%>');
-           '<%}%>'
-           event.preventDefault();
-           var test = document.getElementsByClassName('td');
-           var toServer = {
-             _id: mas[res],
-             rename: $('#rename').val(),
-             resurname: $('#resurname').val(),
-             regroup: $('#regroup').val(),
-             rehallbook: $('#rehallbook').val()
-           }
-           $.ajax({
-             url: '/admin/students/edit',
-             type: 'POST',
-             data: toServer,
-             cache: false,
-             success: function(response) {
-               var initial = document.getElementsByClassName('initial'),
-               groupnumber = document.getElementsByClassName('groupnumber'),
-               hallnumber = document.getElementsByClassName('hallnumber');
-              initial[res].innerText = response.name + ' ' + response.surname;
-              groupnumber[res].innerText = 'Група ' + response.group;
-              hallnumber[res].innerText = 'Номер залікової книги ' + ' ' + response.hallbook;
-             }
-           });
-          $('#rediscipline, #rename, #resurname, #regroup, #rehallbook').val('');
-         };
-          });
-         </script>
-         </div>
-      </div>
-      <script type="text/javascript" src="../../js/student.js">
-      </script>
+					submit2.onclick = function(event) {
+						var mas = [];
+						'<% for(var i = 0; i < students.length; i++)  {%>'
+						mas.push('<%= students[i]._id%>');
+						'<%}%>'
+						event.preventDefault();
+						var test = document.getElementsByClassName('td');
+						var toServer = {
+							_id: mas[res],
+							rename: $('#rename').val(),
+							resurname: $('#resurname').val(),
+							regroup: $('#regroup').val(),
+							rehallbook: $('#rehallbook').val()
+						}
+						$.ajax({
+							url: '/admin/students/edit',
+							type: 'POST',
+							data: toServer,
+							cache: false,
+							success: function(response) {
+								var initial = document.getElementsByClassName('initial'),
+									groupnumber = document.getElementsByClassName('groupnumber'),
+									hallnumber = document.getElementsByClassName('hallnumber');
+								initial[res].innerText = response.name + ' ' + response.surname;
+								groupnumber[res].innerText = response.group;
+								hallnumber[res].innerText = response.hallbook;
+							}
+						});
+						$('#rediscipline, #rename, #resurname, #regroup, #rehallbook').val('');
+					};
+				});
+			</script>
+		</div>
+	</div>
+	<script type="text/javascript" src="../../js/student.js">
+	</script>
 </body>
+
 </html>

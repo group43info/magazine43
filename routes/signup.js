@@ -1,26 +1,32 @@
-
 var ObjectID = require('mongodb').ObjectID;
 var User = require('../models/users.js').User;
 var AuthError = require('../models/users.js').AuthError;
 var mongoose = require('../libs/mongoose.js');
 exports.post = function(req, res, next) {
   if (req.body.email === 'admin@admin') {
-    res.redirect('admin/general')
+    // res.redirect('admin/general')
+    return res.json({
+      status: 'ok',
+      url: '/admin/general'
+    });
   } else {
     var password = req.body.password;
     User.authhorize(req.body.email, password, function(err, user) {
       if (err) {
         if (err instanceof AuthError) {
-          res.send('Wrong key!')
+          res.json('Не вірний пароль!')
         } else {
           return next(err);
         }
       } else {
         if (user === null || user === undefined) {
-          return res.send('Hекоректно введені дані!');
+          return res.json('Hекоректно введені дані!');
         } else {
           req.session.user = user._id;
-          return res.redirect('index');
+          return res.json({
+            status: 'ok',
+            url: '/index'
+          });
         }
       }
     });

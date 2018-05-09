@@ -1,0 +1,22 @@
+body {
+  background: url('../img/books_background.jpg')no-repeat center /cover;
+  ;
+  /* background: url("../img/grad_grey.jpg") no-repeat center center /cover; */
+}
+
+.options {
+  margin-top: 100px;
+}
+
+.nav-button {
+  width: 180px;
+}
+
+.form-horizontal .form-group {
+  margin-right: 0px;
+  margin-left: -0px;
+}
+
+.input-form {
+  width: 500px;
+}

@@ -1,0 +1,149 @@
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="../css/authPages.css">
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <!-- Website Font style -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+  <!-- Google Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+  <title>Admin</title>
+</head>
+
+<body>
+  <div class="container input-form">
+    <div class="row main">
+      <div class="" id="loginForm">
+        <div class="panel-heading">
+          <div class="panel-title text-center">
+            <h1 class="title">Реєстрація у журналі</h1>
+            <hr />
+          </div>
+        </div>
+        <div class="main-login main-center">
+          <form class="form-horizontal">
+
+            <div class="form-group">
+              <label for="surname" class="cols-sm-2 control-label">Прізвище</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  <input type="text" required autocomplete="off" name="surname" class="form-control" id="surname" placeholder="Введіть своє прізвище" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="cols-sm-2 control-label">Ваше ім'я</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  <input type="text" required autocomplete="off" name="name" class="form-control" id="name" placeholder="Введіть своє ім'я" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="cols-sm-2 control-label">Ваш Email</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                  <input type="email" required class="form-control" name="email" id="email" placeholder="Введіть свій електронний адрес" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="hallbook" class="cols-sm-2 control-label">Ваша залікова книга</label>
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-book fa" aria-hidden="true"></i></span>
+                  <input type="text" required autocomplete="off" class="form-control" id="hallbook" name="hallbook" placeholder="Введіть номер залікової" />
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group ">
+              <button type="button" class="btn btn-primary btn-lg btn-block login-button" onclick="signin()">Зареєструватися</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="options">
+      <div class="login">
+        <div class="input-group">
+          <a href="/login"><span class="input-group-addon"><i class="fa fa-adn fa" aria-hidden="true"></i></span>
+          <span class="input-group-addon nav-button">Авторизація</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal fade" id="basicModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Повідомлення з сайту</h4>
+        </div>
+        <div class="modal-body">
+          <h3 id="message">Уеіе</h3>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="button" data-dismiss="modal">Ок</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a style="display:none" id="test" href="#" data-toggle="modal" data-target="#basicModal">Открыть модальное окно</a>
+  <script type="text/javascript">
+    function signin() {
+      var email = document.getElementById('email').value;
+      var surname = document.getElementById('surname').value;
+      var name = document.getElementById('name').value;
+      var hallbook = document.getElementById('hallbook').value;
+      if (email.length === 0) {
+        $('#message').text('Заповніть вірно всі поля!');
+        $('#test').click();
+      } else {
+
+        var toServer = {
+          email: email,
+          surname: surname,
+          name: name,
+          hallbook: hallbook
+        }
+        $.ajax({
+          type: "POST",
+          url: '/signin',
+          data: toServer,
+          cache: false,
+          success: function(data) {
+            $('#message').text(data);
+            $('#test').click();
+            console.log(data);
+          }
+        });
+
+      }
+      // var formData = new FormData();
+      // formData.append('email', email)
+
+    }
+  </script>
+</body>
+
+</html>
